@@ -53,7 +53,7 @@ List will be updated
 
 **Questions?**
 
-For questions regarding the sys-bot and seed checking, Please follow the repository [here](https://gitlab.com/fishguy6564/lanturn-bot-public-source-code)
+For questions regarding the sys-bot and seed checking, Please follow the repository [here](https://gitlab.com/fishguy6564/lanturn-bot-public-source-code).
 
 For questions directed to Ferroseed bot and it's features, find me on discord: Abdur#0846
 
@@ -71,9 +71,9 @@ For questions directed to Ferroseed bot and it's features, find me on discord: A
 
 **Credit:**
 
-Base of the bot is designed by fishguy6564, you can read more about it [here](https://gitlab.com/fishguy6564/lanturn-bot-public-source-code)
-Used algorithms and documentation from various Pokemon hackers
-such as Admiral-Fish and zaksabeast
+Base of the bot is designed by fishguy6564, you can read more about it [here](https://gitlab.com/fishguy6564/lanturn-bot-public-source-code). 
+
+Used algorithms and documentation from various Pokemon hackers such as Admiral-Fish and zaksabeast
 
 olliz0r for the sys-botbase sysmodule
 
