@@ -1,4 +1,4 @@
-from XoroShiro import *
+from seed.XoroShiro import *
 
 class framecalc:
 	XC = int("82A2B175229D6A5B", 16)

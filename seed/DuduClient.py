@@ -160,7 +160,7 @@ def initiateTrade():
     #Gets to the code input menu
     sendCmdHelper(s, "click Y")
     time.sleep(0.55)
-    sendCmdHelper(s, "click A");
+    sendCmdHelper(s, "click A")
     time.sleep(0.55)
     sendCmdHelper(s, "click DDOWN")
     time.sleep(0.55)

@@ -1,9 +1,9 @@
 import binascii
 import struct
 import time
-from PK8 import *
-from framecalc import *
-from seedgen import *
+from seed.PK8 import *
+from seed.framecalc import *
+from seed.seedgen import *
 
 def initializeDuduClient():
 	try:

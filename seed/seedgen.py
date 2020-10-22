@@ -1,7 +1,7 @@
 import struct
 import sys
 import z3
-from XoroShiro import *
+from seed.XoroShiro import *
 
 
 #Functions originally from Admiral-Fish's script

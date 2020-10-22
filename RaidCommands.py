@@ -1,12 +1,14 @@
 from discord.ext import tasks, commands
 import discord
-from framecalc import *
-from seedgen import *
-from GetPokeInfo import *
 from bot import *
-from Person import *
-from ArrayQueue import *
+from seed.XoroShiro import *
+from seed.framecalc import framecalc
+from seed.seedgen import *
+from seed.GetPokeInfo import *
+from seed.Person import *
+from seed.ArrayQueue import *
 from datetime import date, timedelta
+# from seed import XoroShiro
 import time
 
 # 300 with the current queue and the reporting system
