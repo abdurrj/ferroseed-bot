@@ -82,13 +82,13 @@ class DenDex(commands.Cog):
 
 
     @client.command(name = 'dex', aliases = ['pokedex'])
-    async def dex(self, ctx, pkmn):
+    async def dex(self, ctx, *, pkmn):
         ability_check = ['ability1', 'ability2', 'abilityH']
         egg_group_check = ['eggGroup1', 'eggGroup2']
         typing_check = ['type1', 'type2']
         with open(r"data/json/pokemon.json", "r") as read_file:
             data = json.load(read_file)
-        pokemon = (pkmn.lower()).title()
+        pokemon = str((pkmn.lower()).title())
         for i in range(0, len(data)):
             pkmn_info = data[i]
             if pokemon in (pkmn_info.values()):
@@ -139,8 +139,9 @@ class DenDex(commands.Cog):
                     "__`Total: " + str(stat_value[6]) + "`__")
                 if len(sword_dens_list) != 0 or len(shield_dens_list) != 0:
                     embed.add_field(name="Dens", value="Sword: " + str(sword_dens) + "\nShield: " + str(shield_dens) + "", inline=False)
-
-                embed.set_image(url="https://img.pokemondb.net/sprites/home/" + folder +"/"+ pokemon.lower() +".png")
+                
+                pokemon_url_name = pokemon.replace(" ", "-")
+                embed.set_image(url="https://img.pokemondb.net/sprites/home/" + folder +"/"+ pokemon_url_name.lower() +".png")
                 
                 await ctx.send(embed=embed)
 
