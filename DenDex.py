@@ -67,7 +67,7 @@ class DenDex(commands.Cog):
     async def sprite(ctx, pkmn, *shiny):
         with open(r"data/json/pokemon.json", "r") as read_file:
             data = json.load(read_file)
-        pokemon = (pkmn.lower()).title()
+        pokemon = str((pkmn.lower()).title())
         for i in range(0, len(data)):
             pokemon_dict = data[i]
             if pokemon in (pokemon_dict.values()):
@@ -78,7 +78,8 @@ class DenDex(commands.Cog):
                         folder = "normal"
                 else:
                     folder = "normal"
-                await ctx.send("https://img.pokemondb.net/sprites/home/" + folder +"/"+ pokemon.lower() +".png")
+                pokemon_url_name = pokemon.replace(" ", "-")
+                await ctx.send("https://img.pokemondb.net/sprites/home/" + folder +"/"+ pokemon_url_name.lower() +".png")
 
 
     @client.command(name = 'dex', aliases = ['pokedex'])
