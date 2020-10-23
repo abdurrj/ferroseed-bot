@@ -7,3 +7,14 @@ discord ferro.psd
 discord ferro.png
 unused_commands.py
 unused_module_sample.py
+__pycache__/bot.cpython-38.pyc
+__pycache__/Den.cpython-38.pyc
+__pycache__/DenDex.cpython-38.pyc
+__pycache__/Dexter.cpython-38.pyc
+__pycache__/Fun.cpython-38.pyc
+__pycache__/Functions.cpython-38.pyc
+__pycache__/RaidCommands.cpython-38.pyc
+__pycache__/test_module.cpython-38.pyc
+data/txt/ferropet.txt
+data/txt/ferropet.txt
+*.txt

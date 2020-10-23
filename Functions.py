@@ -9,7 +9,7 @@ class Functions(commands.Cog):
         self.idInt = None
 
 
-    @client.command()
+    @commands.command()
     async def clearup(self, ctx, amount):
         amount = int(amount)
         user = ctx.message.author.id
@@ -25,7 +25,7 @@ class Functions(commands.Cog):
             await discord.Message.delete(b)
 
 
-    @client.command()
+    @commands.command()
     async def fc(self, ctx, *args):
         # p = Person(id, ctx.message.channel, ctx.message.author)
         filename = r"data/csv/friendcodes.csv"
@@ -40,14 +40,14 @@ class Functions(commands.Cog):
                 await ctx.send((row[2] + "\n" + row[3] + "\n" + row[4] + "\n" + row[5] +  "\n" + row[6] +  "\n" + row[7]))
 
 
-    @client.command()
+    @commands.command()
     async def flip(self, ctx):
         options = ['Heads','Tails','Heads','Tails','Heads','Tails','Heads','Tails','Heads','Tails']
         selection = random.choice(options)
         await ctx.send(selection) 
 
 
-    @client.command()
+    @commands.command()
     async def poll(self, ctx, *, text):
         id = ctx.message.author.id
         a = text
@@ -68,7 +68,7 @@ class Functions(commands.Cog):
                 print("Emoji " + i + " not found")
 
 
-    @client.command()
+    @commands.command()
     async def spoiler(self, ctx, *text):
         poster = ctx.message.author.id
         files = []
@@ -85,7 +85,7 @@ class Functions(commands.Cog):
         await ctx.send("Sent by <@"+str(poster)+">\n"+str(message_content), files=files)
 
 
-    @client.command()
+    @commands.command()
     async def teams(self, ctx):
         guild = ctx.message.guild
         team1 = guild.get_role(746168865737932831)
@@ -112,7 +112,7 @@ class Functions(commands.Cog):
         await ctx.send(embed=embed)
 
 
-    @client.command()
+    @commands.command()
     async def gibroll(self, ctx, *wnr_amount):
         guild = ctx.message.guild
         raffle_channel = discord.Guild.get_channel(guild, channel_id=766277566934810634)
@@ -131,6 +131,8 @@ class Functions(commands.Cog):
                 else:
                     await command_user.send("Thank you for being so awesome!")
                     for reaction in message.reactions:
+                        seed = random.randrange(sys.maxsize)
+                        random.Random(seed)
                         user_list = [user async for user in reaction.users()]
                         participants = int(len(user_list))
                         if int(wnr_amount) > int(participants):
@@ -151,7 +153,7 @@ class Functions(commands.Cog):
 
 
     # Check if this command is still in use. Remove if it is not
-    @client.command()
+    @commands.command()
     async def roll(self, ctx, participants, winners):
         # command_user = ctx.message.author
         if participants.isnumeric() and winners.isnumeric():
@@ -181,11 +183,14 @@ class Functions(commands.Cog):
 
 
     # Remove this if it has no more use
-    @client.command()
+    @commands.command()
     async def oldroll(self, ctx, wnr_amount, msg_id):
         command_user = ctx.message.author
+        print(command_user)
+        guild = ctx.message.guild
         channel_id = 738391260662071359
-        channel = client.get_channel(channel_id)
+        channel = discord.Guild.get_channel(guild, channel_id=channel_id)
+        print(channel)
         message_id = msg_id
         message = await  channel.fetch_message(message_id)
         if wnr_amount.isnumeric():
@@ -194,6 +199,8 @@ class Functions(commands.Cog):
             else:
                 await command_user.send("Thank you for being so awesome!")
                 for reaction in message.reactions:
+                    seed = random.randrange(sys.maxsize)
+                    random.Random(seed)
                     user_list = [user async for user in reaction.users()]
                     participants = int(len(user_list))
                     if int(wnr_amount) > int(participants):

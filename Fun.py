@@ -10,7 +10,7 @@ class Fun(commands.Cog):
         self.idInt = None
 
     # Caught
-    @client.command(pass_context=True, name = 'caught', aliases=['c', 'catch', 'CAUGHT', 'CATCH', 'CAUGHT!', 'caught!', 'catch!', 'CATCH!'])
+    @commands.command(pass_context=True, name = 'caught', aliases=['c', 'catch', 'CAUGHT', 'CATCH', 'CAUGHT!', 'caught!', 'catch!', 'CATCH!'])
     async def caught(self, ctx, *ball):
         id = ctx.message.author.id
         ball_list = {'sport' : '<:xSport:733003042773008494>', 'safari' : '<:xSafari:733003042579808297>', 'beast' : '<:xNightmare:733002933473378435>',
@@ -44,7 +44,7 @@ class Fun(commands.Cog):
             await discord.Message.add_reaction(a, ball_emoji)
 
     # Naught, for when you don't catch the pokemon
-    @client.command(pass_context=True, name = 'naught', aliases=['not'])
+    @commands.command(pass_context=True, name = 'naught', aliases=['not'])
     async def naught(self, ctx):
         id = ctx.message.author.id
         p = Person(id, ctx.message.channel, ctx.message.author)
@@ -54,7 +54,7 @@ class Fun(commands.Cog):
         a = await ctx.send(embed=embed)
         await discord.Message.add_reaction(a, "<:ferroSad:735707312420945940>")
 
-    @client.command()
+    @commands.command()
     async def hi(self, ctx):
         id = ctx.message.author.id
         p = Person(id, ctx.message.channel, ctx.message.author)
@@ -67,7 +67,7 @@ class Fun(commands.Cog):
         else:
             await ctx.send("<:ferroHappy:734285644817367050>")
 
-    @client.command(pass_context=True)
+    @commands.command(pass_context=True)
     async def pet(self, ctx):
         id = ctx.message.author.id
         p = Person(id, ctx.message.channel, ctx.message.author)
@@ -98,7 +98,7 @@ class Fun(commands.Cog):
                                                     "\nI've hurt you all a total of "+ b +"x times.")
             await ctx.send(embed=embed)
 
-    @client.command()
+    @commands.command()
     async def pets(self, ctx):
         with open(r"data/txt/ferropet.txt", "r+") as fpet:
             petcount = fpet.read()
@@ -106,17 +106,17 @@ class Fun(commands.Cog):
             hurtcount = fhurt.read()
         await ctx.send("I've been pet **"+petcount+"x** times and I've hurt you **"+hurtcount+"x** times")
 
-    @client.command()
+    @commands.command()
     async def birbpet(self, ctx):
         await ctx.send("<a:PetTheBirb:754269160598536214>")
 
     # Go to sleep commands
-    @client.command()
+    @commands.command()
     async def sleep(self, ctx, str):
         await ctx.send("Go to sleep, "+str+" <a:RBops2:718139698912034937>")
 
     # Work command
-    @client.command(name = 'work', aliases=['homework'])
+    @commands.command(name = 'work', aliases=['homework'])
     async def work(self, ctx, str):
         choice = [1,2,3,4,5,6,7,8,9,10]
         selection = random.choice(choice)
@@ -125,7 +125,7 @@ class Fun(commands.Cog):
         else:
             await ctx.send(str+"! Go do the things. <:RStudy:762627515747008512>")
 
-    @client.command()
+    @commands.command()
     async def absleep(self, ctx):
         if ctx.message.author.id in [138411165075243008]:
             embed = discord.Embed(
