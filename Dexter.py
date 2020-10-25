@@ -33,13 +33,15 @@ class Dexter(commands.Cog):
     async def dex(self, ctx, pkmn, *form_input):
         ability_check = ['ability1', 'ability2', 'abilityH']
         egg_group_check = ['eggGroup1', 'eggGroup2']
-        forms_check = ['Male', 'male', 'Female', 'female', 'M', 'm', 'F', 'f', 'Alolan', 'alolan', 'Gigantamax', 'Gmax', 'Mega', 'mega', 'MegaX', 'megax', 'MegaY', 'megay']
-        stat_changing_forms_name_first = ['Male', 'male', 'Female', 'female', 'M', 'm', 'F', 'f']
+        forms_check = ['Male', 'male', 'Female', 'female', 'M', 'm', 'F', 'f', 'Alolan', 'alolan', 'Gigantamax', 'Gmax', 'Mega', 'mega', 'MegaX', 'megax', 'MegaY', 'megay', 'Ice Rider', 'Ice', 'ice', 'Shadow Rider', 'Shadow', 'shadow']
+        stat_changing_forms_name_first = ['Male', 'male', 'Female', 'female', 'M', 'm', 'F', 'f', 'Ice Rider', 'Shadow Rider','ice','Ice','shadow','Shadow']
         stat_changing_forms_name_last = ['Alolan', 'Mega', 'MegaX', 'MegaY']
         typing_check = ['type1', 'type2']
+        # print(form_input)
         with open(r"data/json/pokemon.json", "r") as read_file:
             data = json.load(read_file)
         pokemon = str((pkmn.lower()).title())
+        print(form_input)
 
         possible_names = []
         for i in range(0, len(data)):
@@ -47,20 +49,25 @@ class Dexter(commands.Cog):
             if pkmn_info['name'].startswith(pokemon):
                 poke_name = pkmn_info['name']
                 possible_names.append(poke_name)
-                poke_dict_forms = pkmn_info["forms"]
+                poke_dict_forms = list(pkmn_info["forms"])
+                # print(poke_dict_forms)
         if len(possible_names) == 0:
             print("No match")
         else:
             pokemon = possible_names[0]
         
-        # print(poke_dict_forms)
+        print(len(poke_dict_forms))
         if len(poke_dict_forms) == 0:
             form = ""
         else:
+            # print(poke_dict_forms)
             # Form check
             available_forms = []
             if form_input:
+                print(form_input)
                 form_input = list(form_input)
+                print(form_input)
+                # print(form_input)
                 for i in form_input:
                     if i in forms_check:
                         available_forms.append(i)
@@ -69,9 +76,9 @@ class Dexter(commands.Cog):
                     form = ""
                 else:
                     form = available_forms[0]
-                    if form == 'm' or form == 'M':
+                    if form == 'm' or form == 'M' or form == 'male':
                         form = 'Male'
-                    elif form == 'f' or form == 'F':
+                    elif form == 'f' or form == 'F' or form == 'female':
                         form = 'Female'
                     elif form == 'gmax' or form == 'Gmax':
                         form = 'Gigantamax'
@@ -83,6 +90,10 @@ class Dexter(commands.Cog):
                         form = 'Mega'
                     elif form == 'alolan':
                         form = 'Alolan'
+                    elif form == 'ice' or form == 'Ice':
+                        form = 'Ice Rider'
+                    elif form == 'shadow' or form == 'Shadow':
+                        form = 'Shadow Rider'
             else:
                 form = ""
 
@@ -142,7 +153,10 @@ class Dexter(commands.Cog):
                         if poke_dict_forms[i] in forms_check:
                             i = poke_dict_forms[i]
                             pokemon_forms.append(i)
-                    
+                    if pokemon_forms == ['Male', 'Female', 'm', 'f']:
+                        pokemon_forms.remove('m')
+                        pokemon_forms.remove('f')
+
                     pokemon_forms = "Forms: `" + ', '.join(pokemon_forms[i] for i in range(0, len(pokemon_forms))) + "`"
                 else:
                     pokemon_forms = ""

@@ -56,7 +56,7 @@ class framecalc:
 			if starFrame != -1 and squareFrame != -1:
 				return starFrame, squareFrame
 
-			if i >= 9000: #this was 10000
+			if i >= 9001:
 				return starFrame, squareFrame
 
 		

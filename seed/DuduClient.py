@@ -160,7 +160,7 @@ def initiateTrade():
     #Gets to the code input menu
     sendCmdHelper(s, "click Y")
     time.sleep(0.55)
-    sendCmdHelper(s, "click A")
+    sendCmdHelper(s, "click A");
     time.sleep(0.55)
     sendCmdHelper(s, "click DDOWN")
     time.sleep(0.55)
@@ -193,16 +193,16 @@ def initiateTrade():
     time.sleep(0.55)
 
     #Just to be safe since this is a very important part
-    sendCommand(s, f"poke 0x2F7240A0 0x00000000")
+    sendCommand(s, f"poke 0x2F7241B0 0x00000000")
     time.sleep(0.55)
     s.recv(689)
-    sendCommand(s, f"poke 0x2F7240A0 0x00000000")
+    sendCommand(s, f"poke 0x2F7241B0 0x00000000")
     time.sleep(0.55)
     s.recv(689)
-    sendCommand(s, f"poke 0x2F724084 0x00000000")
+    sendCommand(s, f"poke 0x2F724194 0x00000000")
     time.sleep(0.55)
     s.recv(689)
-    sendCommand(s, f"poke 0x2F724084 0x00000000")
+    sendCommand(s, f"poke 0x2F724194 0x00000000")
     time.sleep(0.55)
     s.recv(689)
 
@@ -249,7 +249,7 @@ while True:
 
         start = time.time()
         while True:
-            sendCommand(s, "peek 0x2F724084 4")
+            sendCommand(s, "peek 0x2F724194 4")
             time.sleep(0.5)
 
             proceed = False
@@ -260,7 +260,7 @@ while True:
                     proceed = True
                 except:
                     print("Error getting data, trying again.")
-                    sendCommand(s, "peek 0x2F724084 4")
+                    sendCommand(s, "peek 0x2F724194 4")
                     time.sleep(0.5)
 
             end = time.time()
@@ -268,7 +268,7 @@ while True:
                 print("Trade Started!")
                 canTrade = True
                 break
-            if (end - start) >= 90:
+            if (end - start) >= 60:
                 timeOutTradeSearch()
                 timedOut()
                 canTrade = False
@@ -276,7 +276,7 @@ while True:
         if canTrade:
             start = time.time()
             while True:
-                sendCommand(s, "peek 0x2F7240A0 4")
+                sendCommand(s, "peek 0x2F7241B0 4")
                 time.sleep(0.5)
 
                 proceed = False
@@ -287,7 +287,7 @@ while True:
                         proceed = True
                     except:
                         print("Error getting data, trying again.")
-                        sendCommand(s, "peek 0x2F7240A0 4")
+                        sendCommand(s, "peek 0x2F7241B0 4")
                         time.sleep(0.5)
 
                 #print(memCheck)
@@ -304,7 +304,7 @@ while True:
             
             if canTrade:
                 exitTrade()
-                sendCommand(s, "peek 0x2F72408A 328")
+                sendCommand(s, "peek 0x2F72419A 328")
                 time.sleep(0.5)
 
                 ek8 = s.recv(689)

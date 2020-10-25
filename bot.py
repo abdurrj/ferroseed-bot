@@ -25,7 +25,7 @@ TOKEN = open("token.txt","r").readline()
 #                      Abdur
 admin_users_id = [138411165075243008]
 
-client = commands.Bot(command_prefix = '.', intents=intents)
+client = commands.Bot(command_prefix = '!', intents=intents)
 client.remove_command('help')
 
 extensions = ['RaidCommands', 'Den', 'Dexter', 'Fun', 'Functions', 'test_module']
