@@ -40182,7 +40182,7 @@
     },
     {
         "dexId": 898,
-        "name": "Calyrex Ice Rider",
+        "name": "Ice Rider Calyrex",
         "baseStats": {
             "hp": 100,
             "atk": 165,
@@ -40215,7 +40215,7 @@
     },
     {
         "dexId": 898,
-        "name": "Calyrex Shadow Rider",
+        "name": "Shadow Rider Calyrex",
         "baseStats": {
             "hp": 100,
             "atk": 85,

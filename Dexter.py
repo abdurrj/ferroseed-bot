@@ -33,41 +33,37 @@ class Dexter(commands.Cog):
     async def dex(self, ctx, pkmn, *form_input):
         ability_check = ['ability1', 'ability2', 'abilityH']
         egg_group_check = ['eggGroup1', 'eggGroup2']
-        forms_check = ['Male', 'male', 'Female', 'female', 'M', 'm', 'F', 'f', 'Alolan', 'alolan', 'Gigantamax', 'Gmax', 'Mega', 'mega', 'MegaX', 'megax', 'MegaY', 'megay', 'Ice Rider', 'Ice', 'ice', 'Shadow Rider', 'Shadow', 'shadow']
-        stat_changing_forms_name_first = ['Male', 'male', 'Female', 'female', 'M', 'm', 'F', 'f', 'Ice Rider', 'Shadow Rider','ice','Ice','shadow','Shadow']
-        stat_changing_forms_name_last = ['Alolan', 'Mega', 'MegaX', 'MegaY']
+        forms_check = ['Male', 'male', 'Female', 'female', 'M', 'm', 'F', 'f', 'Alolan', 'alolan', 'Gigantamax', 'Gmax', 'Mega', 'mega', 'MegaX', 'megax', 'MegaY', 'megay', 'Ice Rider', 'Ice', 'ice','Shadow Rider','Shadow','shadow']
+        stat_changing_forms_name_first = ['Male', 'male', 'Female', 'female', 'M', 'm', 'F', 'f',]
+        stat_changing_forms_name_last = ['Alolan', 'Mega', 'MegaX', 'MegaY', 'Ice Rider', 'Shadow Rider','ice','Ice','shadow','Shadow']
         typing_check = ['type1', 'type2']
-        # print(form_input)
         with open(r"data/json/pokemon.json", "r") as read_file:
             data = json.load(read_file)
         pokemon = str((pkmn.lower()).title())
-        print(form_input)
 
         possible_names = []
+        poke_dict_forms = []
         for i in range(0, len(data)):
             pkmn_info = data[i]
             if pkmn_info['name'].startswith(pokemon):
                 poke_name = pkmn_info['name']
                 possible_names.append(poke_name)
-                poke_dict_forms = list(pkmn_info["forms"])
+                poke_dict_forms = pkmn_info["forms"]
                 # print(poke_dict_forms)
         if len(possible_names) == 0:
             print("No match")
         else:
             pokemon = possible_names[0]
         
-        print(len(poke_dict_forms))
+        
+        # print(poke_dict_forms)
         if len(poke_dict_forms) == 0:
             form = ""
         else:
-            # print(poke_dict_forms)
             # Form check
             available_forms = []
             if form_input:
-                print(form_input)
                 form_input = list(form_input)
-                print(form_input)
-                # print(form_input)
                 for i in form_input:
                     if i in forms_check:
                         available_forms.append(i)
@@ -109,6 +105,8 @@ class Dexter(commands.Cog):
             print("no form")
             pokemon_lookup = pokemon
         
+        # print(pokemon_lookup)
+
         for i in range(0, len(data)):
             pkmn_info = data[i]
             if pokemon_lookup in (pkmn_info.values()):
@@ -174,6 +172,10 @@ class Dexter(commands.Cog):
                 else:
                     folder = "normal"
 
+
+                pokemon_url_name = pokemon.replace(" ", "-")
+                # print(pokemon_url_name)
+
                 embed = discord.Embed(title="__#" + str(pkmn_info["dexId"]) +  " " + pokemon_name + "__", colour=0xFF0000)
                 embed.add_field(name="Misc. Info", value=typing + "\n" + catch_rate + "\nEgg Groups: `" + egg_groups + "`\n" + pokemon_forms)
                 embed.add_field(name="Abilities", value=ability, inline=True)
@@ -187,8 +189,14 @@ class Dexter(commands.Cog):
                 if len(sword_dens_list) != 0 or len(shield_dens_list) != 0:
                     embed.add_field(name="Dens", value="Sword: " + str(sword_dens) + "\nShield: " + str(shield_dens) + "", inline=False)
                 
-                pokemon_url_name = pokemon.replace(" ", "-")
-                embed.set_image(url="https://img.pokemondb.net/sprites/home/" + folder +"/"+ pokemon_url_name.lower() + form + ".png")
+                if pokemon_lookup == 'Ice Rider Calyrex':
+                    url = 'https://www.serebii.net/swordshield/pokemon/898-i.png'
+                    embed.set_image(url=url)
+                elif pokemon_lookup == 'Shadow Rider Calyrex':
+                    url = 'https://www.serebii.net/swordshield/pokemon/898-s.png'
+                    embed.set_image(url=url)
+                else:
+                    embed.set_image(url="https://img.pokemondb.net/sprites/home/" + folder +"/"+ pokemon_url_name.lower() + form + ".png")
             
                 await ctx.send(embed=embed)
 
