@@ -182,7 +182,7 @@ class Functions(commands.Cog):
             await ctx.send("<a:RQuestion:713380476357705740> Did you input (positive) numbers?")
 
 
-    # Remove this if it has no more use
+"""     # Remove this if it has no more use
     @commands.command()
     async def oldroll(self, ctx, wnr_amount, msg_id):
         command_user = ctx.message.author
@@ -215,7 +215,7 @@ class Functions(commands.Cog):
                                 + str(winner_names)+"\nWinner ID:\n```"+str(winner_id) + "```")
         else:
             await ctx.send("What, you want **" + wnr_amount + "** winner(s)? Maybe try a (positive) number?")
-        await message.unpin()
+        await message.unpin() """
 
 
 def setup(client):

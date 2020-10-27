@@ -7,8 +7,8 @@ from seed.seedgen import *
 from seed.GetPokeInfo import *
 from seed.Person import *
 from seed.ArrayQueue import *
-from datetime import date, timedelta
-# from seed import XoroShiro
+from datetime import date, timedelta, datetime
+import pytz
 import time
 
 # 300 with the current queue and the reporting system
@@ -19,227 +19,293 @@ import time
 q = ArrayQueue(20)
 
 class RaidCommands(commands.Cog):
-	def __init__(self, client):
-		self.checkDataReady.start()
-		self.userChannel = None
-		self.user = None
-		self.id = None
-		self.person = None
-		self.idInt = None
+    def __init__(self, client):
+        self.checkDataReady.start()
+        self.userChannel = None
+        self.user = None
+        self.id = None
+        self.person = None
+        self.idInt = None
+        
 
-	#Clears instance variables
-	def clearData(self):
-		self.userChannel = None
-		self.user = None
-		self.id = None
-		self.idInt = None
-		self.person = None
+    #Clears instance variables
+    def clearData(self):
+        self.userChannel = None
+        self.user = None
+        self.id = None
+        self.idInt = None
+        self.person = None
 
-	#Generates the appropriate string based on your star and square frames
-	def generateFrameString(self, starFrame, squareFrame):
-		starFrameMessage = ""
-		if starFrame != -1:
-			starFrameMessage = str(starFrame + 1)
-		else:
-			starFrameMessage = "IT´S OVER 9000!!!!!"
+    #Generates the appropriate string based on your star and square frames
+    def generateFrameString(self, starFrame, squareFrame):
+        starFrameMessage = ""
+        if starFrame != -1:
+            starFrameMessage = str(starFrame + 1)
+        else:
+            starFrameMessage = "IT´S OVER 9000!!!!!"
 
-		squareFrameMessage = ""
-		if squareFrame != -1:
-			squareFrameMessage = str(squareFrame + 1)
-		else:
-			squareFrameMessage = "IT´S OVER 9000!!!!!"
+        squareFrameMessage = ""
+        if squareFrame != -1:
+            squareFrameMessage = str(squareFrame + 1)
+        else:
+            squareFrameMessage = "IT´S OVER 9000!!!!!"
 
-		return starFrameMessage, squareFrameMessage
+        return starFrameMessage, squareFrameMessage
 
-	#Reports how many people are in the queue
-	@commands.command(name="CheckQueueSize")
-	async def checkQueueSize(self, ctx):
-		await ctx.send("Current queue size is: " + str(q.size()))
+    #Reports how many people are in the queue
+    @commands.command(name="CheckQueueSize")
+    async def checkQueueSize(self, ctx):
+        await ctx.send("Current queue size is: " + str(q.size()))
 
-	#Reports where the sender is in the queue
-	@commands.command(name="CheckMyPlace")
-	async def checkMyPlace(self, ctx):
-		global q
-		id = ctx.message.author.id
-		p = Person(id, ctx.message.channel, ctx.message.author)
-		place = q.indexOf(p) + 1
+    #Reports where the sender is in the queue
+    @commands.command(name="CheckMyPlace")
+    async def checkMyPlace(self, ctx):
+        global q
+        id = ctx.message.author.id
+        p = Person(id, ctx.message.channel, ctx.message.author)
+        place = q.indexOf(p) + 1
 
-		if place > 0:
-			await p.send("```python\nHi there! You are currently at the place " + place + ".\n```")
-		else:
-			await p.send("```python\nSorry but you're not in the queue right now.\n```")
+        if place > 0:
+            await p.send("```python\nHi there! You are currently at the place " + place + ".\n```")
+        else:
+            await p.send("```python\nSorry but you're not in the queue right now.\n```")
 
-	@commands.command(name="seed") #CheckMySeed was the original code, then checkmyseed, use whatever is easiest
-	async def checkMySeed(self, ctx):
-		global q
+    @commands.command(name="seed") #CheckMySeed was the original code, then checkmyseed, use whatever is easiest
+    async def checkMySeed(self, ctx):
+        global q
+        id = ctx.message.author.id
+        if q.availableSpace():
+            print("Invoked by: " + str(ctx.message.author) + " in: " + str(ctx.message.guild))
+            if ctx.message.guild != None:
 
-		if q.availableSpace():
-			print("Invoked by: " + str(ctx.message.author) + " in: " + str(ctx.message.guild))
-			if ctx.message.guild != None:
+                #Constructs person object for queue
+                id = ctx.message.author.id
+                p = Person(id, ctx.message.channel, ctx.message.author)
 
-				#Constructs person object for queue
-				id = ctx.message.author.id
-				p = Person(id, ctx.message.channel, ctx.message.author)
+                #Checks if queue already contains assets from the constructed person object
+                if not q.contains(p) and self.idInt != id:
 
-				#Checks if queue already contains assets from the constructed person object
-				if not q.contains(p) and self.idInt != id:
+                    #Checks if anyone is currently being served
+                    if self.person == None:
+                        q.enqueue(p)
+                        await ctx.send("<@"+str(id)+">"+" Ferroseeeeed awayyy! I'll let you know when I'm ready!")
 
-					#Checks if anyone is currently being served
-					if self.person == None:
-						q.enqueue(p)
-						await ctx.send("<@"+str(id)+">"+" Ferroseeeeed awayyy! I'll let you know when I'm ready!") #Ferroseed dispatched, I will ping you once I start searching! There are currently no people ahead of you")
+                        user = ctx.message.author
 
-					#Checks if you are already being served
-					elif self.person.getID() != id:
-						q.enqueue(p)
 
-						#for correct grammar
-						prsn = ""
-						pre = ""
-						if q.size() == 1:
-							prsn = " person "
-							pre = " is "
-						else:
-							prsn = " people "
-							pre = " are "
 
-						await ctx.send("<@"+str(id)+">"+" Ermahgerd! Another person in line! Please wait, I'll ping you when I'm ready! There" + pre + "currently " + str(q.size()) + prsn + "waiting in front of you.") #Ferroseed dispatched, I will ping you once I start searching! There" + pre + "currently " + str(q.size()) + prsn + "waiting in front of you.")
-					elif self.person.getID() == id:
-						await ctx.send("You are already being served, please wait!")
-				else:
-					await ctx.send("You are already in line! Please wait until I ping you for your turn.")
-		else:
-			await ctx.send("The queue is already full! Please wait a while before trying to register.")
+                    #Checks if you are already being served
+                    elif self.person.getID() != id:
+                        q.enqueue(p)
 
-	#Main loop that is sending and receiving data from the dudu client
-	@tasks.loop(seconds=0.1)
-	async def checkDataReady(self):
-		global q
+                        #for correct grammar
+                        prsn = ""
+                        pre = ""
+                        if q.size() == 1:
+                            prsn = " person "
+                            pre = " is "
+                        else:
+                            prsn = " people "
+                            pre = " are "
 
-		#If there is no person being served and the queue is not empty, get the next person in the queue
-		#and start the dudu client
-		if self.person == None and not q.isEmpty():
-			self.person = q.dequeue()
-			print("Current person being served: " + str(self.person.getUser()))
-			initializeDuduClient()
+                        await ctx.send("<@"+str(id)+">"+" Ermahgerd! Another person in line! Please wait, I'll ping you when I'm ready! There" + pre + "currently " + str(q.size()) + prsn + "waiting in front of you.") #Ferroseed dispatched, I will ping you once I start searching! There" + pre + "currently " + str(q.size()) + prsn + "waiting in front of you.")
+                    elif self.person.getID() == id:
+                        await ctx.send("You are already being served, please wait!")
+                else:
+                    await ctx.send("You are already in line! Please wait until I ping you for your turn.")
+        else:
+            await ctx.send("The queue is already full! Please wait a while before trying to register.")
 
-		#Checks if lanturn is now searching and if there is a person being served
-		if checkSearchStatus() and self.person != None:
+    #Main loop that is sending and receiving data from the dudu client
+    @tasks.loop(seconds=0.1)
+    async def checkDataReady(self):
+        global q
 
-			#assigns assets based on the person being served
-			self.userChannel = self.person.getUserChannel()
-			self.user = self.person.getUser()
-			self.id = self.person.getIDString()
-			self.idInt = self.person.getID()
-			
-			#Gets link code from text file
-			code = getCodeString()
-			#Me trying to make code easier to read, if this doesn't work, remove the lines from here:
-			a = code
-			[a[i:i+4] for i in range(0, len(a), 4)]
-			codee = ' '.join([a[i:i+4] for i in range(0, len(a), 4)])
-			print(codee)
-			#to here^^^
+        #If there is no person being served and the queue is not empty, get the next person in the queue
+        #and start the dudu client
+        if self.person == None and not q.isEmpty():
+            self.person = q.dequeue()
+            print("Current person being served: " + str(self.person.getUser()))
+            initializeDuduClient()
 
-			await self.userChannel.send(self.id + " It's your turn! Check your DMs for a link code. My IGN is: A-dur.")
-			await self.user.send("```python\nI am once again rolling into your DMs. Your link code is: \n" + codee + "\nPlease use it to match up with me in trade! I will also DM you the seed afterwards```")
+        #Checks if lanturn is now searching and if there is a person being served
+        if checkSearchStatus() and self.person != None:
+            #assigns assets based on the person being served
+            self.userChannel = self.person.getUserChannel()
+            self.user = self.person.getUser()
+            self.id = self.person.getIDString()
+            self.idInt = self.person.getID()
+            
+            #Gets link code from text file
+            code = getCodeString()
+            #Me trying to make code easier to read, if this doesn't work, remove the lines from here:
+            a = code
+            [a[i:i+4] for i in range(0, len(a), 4)]
+            codee = ' '.join([a[i:i+4] for i in range(0, len(a), 4)])
+            print(codee)
+            #to here^^^
+            
+            await self.userChannel.send(self.id + " It's your turn! Check your DMs for a link code. My IGN is: A-dur.")
+            await self.user.send("```python\nI am once again rolling into your DMs. Your link code is: \n" + codee + "\nPlease use it to match up with me in trade! I will also DM you the seed afterwards```")
+                            
 
-		#Check if user has timed out and checks if a valid userChannel is present
-		if checkTimeOut() and self.userChannel != None:
-			await self.userChannel.send(self.id + " Knock knock... Who's there? Nobody apparently :(... You took too long, or maybe it was the connection?") 
-			self.clearData()
+        #Check if user has timed out and checks if a valid userChannel is present
+        if checkTimeOut() and self.userChannel != None:
+            await self.userChannel.send(self.id + " Knock knock... Who's there? Nobody apparently :(... You took too long, or maybe it was the connection?") 
+            self.clearData()
 
-		#Check if a valid user channel is present and if the dudu client is still running
-		if self.userChannel != None and not checkDuduStatus():
-			time.sleep(2.0)
-			ec, pid, seed, ivs, iv = getPokeData()			
+        #Check if a valid user channel is present and if the dudu client is still running
+        if self.userChannel != None and not checkDuduStatus():
+            time.sleep(2.0)
+            ec, pid, seed, ivs, iv = getPokeData()
 
-			if seed != -1:
-				calc = framecalc(seed)
-				starFrame, squareFrame = calc.getShinyFrames()
+            role_list = []
+            seed_checker_roles = []
 
-				starFrameMessage, squareFrameMessage = self.generateFrameString(starFrame, squareFrame)
-				starsave = (date.today()+timedelta(starFrame)-timedelta(3)).isoformat()
-				squaresave = (date.today()+timedelta(squareFrame)-timedelta(3)).isoformat()
-				stardate = (date.today()+timedelta(starFrame)).isoformat()
-				squaredate = (date.today()+timedelta(squareFrame)).isoformat()
+            seed_checker = self.user
+            seed_checker_roles = seed_checker.roles
+            for i in seed_checker_roles:
+                role_list.append(i.name)
 
-				await self.userChannel.send(#self.id + "```python\nEncryption Constant: " + str(hex(ec)) +
+            # Check user timezone to correct dates
+
+            print(role_list)
+            if "Time zone: CDT" in role_list:
+                tz = pytz.timezone('US/Central')
+                timezone = "US Central"
+            elif "Time zone: EDT" in role_list:
+                tz = pytz.timezone('US/Eastern')
+                timezone = "US Eastern"
+            elif "Time zone: MYT" in role_list:
+                tz = pytz.timezone('Singapore')
+                timezone = "Malaysia"
+            elif "Time zone: NDT" in role_list:
+                tz = pytz.timezone('Canada/Newfoundland')
+                timezone = "Newfoundland"
+            elif "Time zone: PDT" in role_list:
+                tz = pytz.timezone('US/Pacific')
+                timezone = "Pacific"
+            elif "Time zone: PST" in role_list:
+                tz = pytz.timezone('US/Pacific')
+                timezone = "Pacific"
+            elif "Time zone: WEST" in role_list:
+                tz = pytz.timezone('Europe/Lisbon')
+                timezone = "West Europe"
+            elif "Time zone: CEST" in role_list:
+                tz = pytz.timezone("Europe/Oslo")
+                timezone = "Central Europe"
+            else:
+                tz = pytz.timezone("Europe/Oslo")
+                timezone = "None, using Central Europe"
+
+            if seed != -1:
+                calc = framecalc(seed)
+                starFrame, squareFrame = calc.getShinyFrames()
+
+                starFrameMessage, squareFrameMessage = self.generateFrameString(starFrame, squareFrame)
+                starsave = (datetime.now(tz)+timedelta(starFrame)-timedelta(3)).strftime("%Y-%m-%d")
+                squaresave = (datetime.now(tz)+timedelta(squareFrame)-timedelta(3)).strftime("%Y-%m-%d")
+                stardate = (datetime.now(tz)+timedelta(starFrame)).strftime("%Y-%m-%d")
+                squaredate = (datetime.now(tz)+timedelta(squareFrame)).strftime("%Y-%m-%d")
+
+                if starFrameMessage.isdigit():
+                    starFrameMessage = int(starFrameMessage) - 1
+                else:
+                    stardate = "...."
+                    starsave = "...."
+                
+                if squareFrameMessage.isdigit():
+                    squareFrameMessage = int(squareFrameMessage) - 1
+                else:
+                    squaredate = "...."
+                    squaresave = "...."
+
+                await self.userChannel.send(#self.id + "```python\nEncryption Constant: " + str(hex(ec)) +
 #					"\nPID: " + str(hex(pid)) +
 #					"\nAmount of IVs: " + str(ivs) +  
 #					"\nIVs: " + str(iv[0]) + "/" + str(iv[1]) + "/" + str(iv[2]) + "/" + str(iv[3]) + "/" + str(iv[4]) + "/" + str(iv[5]) + 
-					"```python\nRemember, I(Ferroseed) live in Europe(CEST TIME), date format is YYYY/MM/DD."
-					"\nThe dates calculated are based on the current date for me."
-					"\nUntil I can fix it to not show for this case: Ignore the dates if frame IS OVER 9000!!!"
-					"\n"
-					"\nSeed: " + seed +
-					"\n"
-					"\nStar Shiny at Frame (not skips):.... " + starFrameMessage +
-					"\nDate for star shiny:................ " + stardate +
-					"\nDate, 3 skips before shiny:......... " + starsave +
-					"\n"
-					"\nSquare Shiny at Frame (not skips):.. " + squareFrameMessage +
-					"\nDate for square shiny:.............. " + squaredate +
-					"\nDate, 3 skips before shiny:......... " + squaresave + "```")
+                    "```python\nTimezone role registered: " + timezone + "."
+                    "\nDates should be corrected for this"
+                    "\n"
+                    "\nIs this your current time? " + datetime.now(tz).strftime("%Y-%m-%d, %I:%M %p") +
+                    "\n"
+                    "\nSeed: " + seed +
+                    "\n"
+                    "\nSkips to star shiny:........... " + str(starFrameMessage) +
+                    "\nDate for star shiny:........... " + stardate +
+                    "\nDate, 3 skips before shiny:.... " + starsave +
+                    "\n"
+                    "\nSkips to square shiny:......... " + str(squareFrameMessage) +
+                    "\nDate for square shiny:......... " + squaredate +
+                    "\nDate, 3 skips before shiny:.... " + squaresave + "```")
 
-				await self.userChannel.send("```Bot gives the actual frame for the shiny, not amount of skips. Example: If the bot says Shiny frame: 4, you skip 3 frames to get to there."
-                                                            "\nFor the sake of storage, the seed is sent to your DMs as well as posted below for easy copy from phones.```")
-				await self.user.send(seed)
-				await self.userChannel.send(seed)
-				await self.userChannel.send("<https://leanny.github.io/seedchecker/index.html>")
+                await self.userChannel.send("```Remember that the bot shows how many skips to shiny."
+                "\nToday is 0, tomorrow is 1."
+                "\nFor the sake of storage, the seed is sent to your DMs as well as posted below for easy copy from phones.```")
+                await self.user.send(seed)
+                await self.userChannel.send(seed)
+                await self.userChannel.send("<https://leanny.github.io/seedchecker/index.html>")
+                # Reset lists
+                role_list = []
+                seed_checker_roles = []
 
 
-				#outputs how many people remain in line
+
+                #outputs how many people remain in line
 #				time.sleep(1.0)
 #				await self.userChannel.send("People remaining in line: " + str(q.size()))
-				self.clearData()
-			else:
-				await self.userChannel.send(self.id + " Invalid seed. Please try a different Pokemon.")
-				self.clearData()
+                self.clearData()
+            else:
+                await self.userChannel.send(self.id + " Invalid seed. Please try a different Pokemon.")
+                self.clearData()
+                role_list = []
+                seed_checker_roles = []
+        # Reset lists
+        role_list = []
+        seed_checker_roles = []
+            
+        #await ctx.send("Invoked")
 
-			
-		#await ctx.send("Invoked")
+    @commands.command(name='GetSeed')
+    async def obtainSeed(self, ctx, arg1=None, arg2=None, arg3=None):
+        try:
+            #Convert user strings to a usable format (int)
+            ec = int(arg1, 16)
+            pid = int(arg2, 16)
+            ivs = [ int(iv) for iv in arg3.split("/") ]
 
-	@commands.command(name='GetSeed')
-	async def obtainSeed(self, ctx, arg1=None, arg2=None, arg3=None):
-		try:
-			#Convert user strings to a usable format (int)
-			ec = int(arg1, 16)
-			pid = int(arg2, 16)
-			ivs = [ int(iv) for iv in arg3.split("/") ]
+            #Generate seed from user input
+            gen = seedgen()
+            seed, ivs = gen.search(ec, pid, ivs)
 
-			#Generate seed from user input
-			gen = seedgen()
-			seed, ivs = gen.search(ec, pid, ivs)
+            #Calculate star and square shiny frames based on seed
+            calc = framecalc(seed)
+            starFrame, squareFrame = calc.getShinyFrames()
 
-			#Calculate star and square shiny frames based on seed
-			calc = framecalc(seed)
-			starFrame, squareFrame = calc.getShinyFrames()
+            #Format message based on result and output
+            starFrameMessage, squareFrameMessage = self.generateFrameString(starFrame, squareFrame)
 
-			#Format message based on result and output
-			starFrameMessage, squareFrameMessage = self.generateFrameString(starFrame, squareFrame)
+            await ctx.send("```python\nRaid seed: " + str(seed) + "\nAmount of IVs: " + str(ivs) + "\nStar Shiny at Frame: " + starFrameMessage + "\nSquare Shiny at Frame: " + squareFrameMessage + "```")
+        except:
+            await ctx.send("Please format your input as: ```$GetSeed [Encryption Constant] [PID] [IVs as HP/Atk/Def/SpA/SpD/Spe]```")
 
-			await ctx.send("```python\nRaid seed: " + str(seed) + "\nAmount of IVs: " + str(ivs) + "\nStar Shiny at Frame: " + starFrameMessage + "\nSquare Shiny at Frame: " + squareFrameMessage + "```")
-		except:
-			await ctx.send("Please format your input as: ```$GetSeed [Encryption Constant] [PID] [IVs as HP/Atk/Def/SpA/SpD/Spe]```")
+    @commands.command(name='GetFrameData')
+    async def obtainFrameData(self, ctx, arg1=None):
+        try:
+            #Convert user strings to a usable format
+            seed = hex(int(arg1, 16))
 
-	@commands.command(name='GetFrameData')
-	async def obtainFrameData(self, ctx, arg1=None):
-		try:
-			#Convert user strings to a usable format
-			seed = hex(int(arg1, 16))
+            #Calculate star and square shiny frames based on seed
+            calc = framecalc(seed)
+            starFrame, squareFrame = calc.getShinyFrames()
 
-			#Calculate star and square shiny frames based on seed
-			calc = framecalc(seed)
-			starFrame, squareFrame = calc.getShinyFrames()
+            #Format message based on result and output
+            starFrameMessage, squareFrameMessage = self.generateFrameString(starFrame, squareFrame)
 
-			#Format message based on result and output
-			starFrameMessage, squareFrameMessage = self.generateFrameString(starFrame, squareFrame)
-
-			await ctx.send("```python\nFor Seed: " + str(seed) + "\nStar Shiny at Frame: " + starFrameMessage + "\nSquare Shiny at Frame: " + squareFrameMessage + "```")
-		except:
-			await ctx.send("```$GetFrameData [Input your Seed]```")
-		
+            await ctx.send("```python\nFor Seed: " + str(seed) + "\nStar Shiny at Frame: " + starFrameMessage + "\nSquare Shiny at Frame: " + squareFrameMessage + "```")
+        except:
+            await ctx.send("```$GetFrameData [Input your Seed]```")
+        
 
 def setup(client):
-	client.add_cog(RaidCommands(client))
+    client.add_cog(RaidCommands(client))

@@ -12,6 +12,8 @@ class test_module(commands.Cog):
     @commands.command()
     async def testcommand(self, ctx):
         print("testing, testing.. 1.. 2... 3... 4?")
+        print(self.user)
+
 
 def setup(client):
     client.add_cog(test_module(client))

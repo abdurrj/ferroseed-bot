@@ -125,12 +125,13 @@ React to pin
 
 @client.event
 async def on_raw_reaction_add(payload):
-    
+    guild_id = payload.guild_id
+    guild = discord.utils.find(lambda g :g.id == guild_id, client.guilds)
     #Reaction colour start
     message_id = payload.message_id
     if message_id == 756051702200664115: # Reaction colour roles
-        guild_id = payload.guild_id
-        guild = discord.utils.find(lambda g :g.id == guild_id, client.guilds)
+        # guild_id = payload.guild_id
+        # guild = discord.utils.find(lambda g :g.id == guild_id, client.guilds)
 
         if payload.emoji.name == 'martin': # :name: for custom, but 😂 for unicode
             role = discord.utils.get(guild.roles, name='Martin')
@@ -210,6 +211,47 @@ async def on_raw_reaction_add(payload):
         # valid_users_test = all(user != pin_reactor_id for user in valid_users)
         # if valid_users_test == False:
         await pin_msg.pin()
+
+
+
+    # Create voice channel
+    if message_id == 770315723464638484:
+        voice_category = client.get_channel(739139545202950161)
+        channel_list = guild.channels
+        channel_name_list = []
+        for i in range(0, len(channel_list)):
+            channel_name = channel_list[i].name
+            channel_name_list.append(channel_name)
+        
+        if payload.emoji.name == '🟥':
+            channel_name = "a-red-voice-channel"
+            if channel_name in channel_name_list:
+                print("Channel already created")
+            else:
+                await guild.create_voice_channel(channel_name, category=voice_category)
+        elif payload.emoji.name == '🟩':
+            channel_name = "a-green-voice-channel"
+            if channel_name in channel_name_list:
+                print("Channel already created")
+            else:
+                await guild.create_voice_channel(channel_name, category=voice_category)
+        elif payload.emoji.name == '🟦':
+            channel_name = "a-blue-voice-channel"
+            if channel_name in channel_name_list:
+                print("Channel already created")
+            else:
+                await guild.create_voice_channel(channel_name, category=voice_category)
+
+
+
+
+
+
+"""
+############################################
+"""
+
+
 
 
 # remove react to remove role
@@ -297,6 +339,29 @@ async def on_raw_reaction_remove(payload):
         # valid_users_test = all(user != pin_reactor_id for user in valid_users)
         # if valid_users_test == False: # use this if you want only message author and admins to be able to unpin
         await pin_msg.unpin()
+
+
+
+    if message_id == 770315723464638484:
+        voice_category = client.get_channel(770314988170248222)
+        guild_id = payload.guild_id
+        guild = discord.utils.find(lambda g :g.id == guild_id, client.guilds)
+        if payload.emoji.name == '🟥':
+            channel_name = "a-red-voice-channel"
+            channel = discord.utils.get(guild.voice_channels, name=channel_name)
+            await discord.VoiceChannel.delete(channel)
+        elif payload.emoji.name == '🟩':
+            channel_name = "a-green-voice-channel"
+            channel = discord.utils.get(guild.voice_channels, name=channel_name)
+            await discord.VoiceChannel.delete(channel)
+        elif payload.emoji.name == '🟦':
+            channel_name = "a-blue-voice-channel"
+            channel = discord.utils.get(guild.voice_channels, name=channel_name)
+            await discord.VoiceChannel.delete(channel)
+
+
+
+
 
 '''
 #####################

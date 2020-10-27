@@ -15,6 +15,17 @@ class Dexter(commands.Cog):
         with open(r"data/json/pokemon.json", "r") as read_file:
             data = json.load(read_file)
         pokemon = str((pkmn.lower()).title())
+        possible_names = []
+        for i in range(0, len(data)):
+            pkmn_info = data[i]
+            if pkmn_info['name'].startswith(pokemon):
+                poke_name = pkmn_info['name']
+                possible_names.append(poke_name)
+        if len(possible_names) == 0:
+            print("No match")
+        else:
+            pokemon = possible_names[0]
+            
         for i in range(0, len(data)):
             pokemon_dict = data[i]
             if pokemon in (pokemon_dict.values()):

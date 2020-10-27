@@ -24,11 +24,13 @@ class Den(commands.Cog):
         if args:
             loc = args[0]
             if loc == "ioa":
-                    i = randint(94, 157)
+                i = randint(94, 157)
             elif loc == "swsh":
-                    i = randint(1, 93)
+                i = randint(1, 93)
+            elif loc == "ct":
+                i = randint(158, 197)
         else:
-            i = randrange(157)
+            i = randrange(197)
         newden = str(i)
         await ctx.send("<https://www.serebii.net/swordshield/maxraidbattles/den"+newden+".shtml>")
 
