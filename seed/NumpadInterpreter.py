@@ -68,7 +68,7 @@ def getButtons(input):
 	btncmdseq.clear()
 
 	if input == None:
-		input = random.randint(64006400, 65006500) # input = random.randint(65006500, 66006600)
+		input = random.randint(25002500, 25003500) # input = random.randint(65006500, 66006600)
 
 	quadrillions = int(input / 10000000)
 	trillions = int((input / 1000000) % 10)
@@ -81,10 +81,10 @@ def getButtons(input):
 	ones = input % 10
 
 	if quadrillions == 0:
-		quadrillions = random.randint(6,6)
+		quadrillions = random.randint(2,2)
 
 	if trillions == 0:
-		trillions = random.randint(4,4)
+		trillions = random.randint(5,5)
 
 	if billions == 0:
 		billions = random.randint(1,9)
@@ -93,7 +93,7 @@ def getButtons(input):
 		millions = random.randint(1,9)
 
 	if thousands == 0:
-		thousands = random.randint(6,6)
+		thousands = random.randint(2,2)
 
 	if hundreds == 0:
 		hundreds = random.randint(5,5)

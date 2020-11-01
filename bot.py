@@ -28,7 +28,7 @@ admin_users_id = [138411165075243008]
 client = commands.Bot(command_prefix = '!', intents=intents)
 client.remove_command('help')
 
-extensions = ['RaidCommands', 'Den', 'Dexter', 'Fun', 'Functions', 'test_module']
+extensions = ['RaidCommands', 'Den', 'Dexter', 'Fun', 'Functions', 'test_module', 'Reactions']
 
 
 @client.event
@@ -114,6 +114,9 @@ async def end(ctx):
 
 
 '''
+Reaction events have been moved out to extension.
+This is kept here for a few days just in case.
+
 #####################
 Reaction events start
 
@@ -121,7 +124,7 @@ This includes:
 Reaction role
 React to pin
 #####################
-'''
+
 
 @client.event
 async def on_raw_reaction_add(payload):
@@ -243,16 +246,9 @@ async def on_raw_reaction_add(payload):
                 await guild.create_voice_channel(channel_name, category=voice_category)
 
 
-
-
-
-
 """
 ############################################
 """
-
-
-
 
 # remove react to remove role
 @client.event
@@ -361,9 +357,6 @@ async def on_raw_reaction_remove(payload):
 
 
 
-
-
-'''
 #####################
 Reaction events end
 #################
