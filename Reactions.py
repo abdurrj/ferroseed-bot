@@ -63,6 +63,8 @@ class Reactions(Cog):
             print("Reaction role message")
             if payload.emoji.name == 'pogo': # :name: for custom, but 😂 for unicode
                 role = discord.utils.get(guild.roles, name = 'PoGo raiders')
+            elif payload.emoji.name == '⛑️':
+                role = discord.utils.get(guild.roles, name='Dynamax Adventurers')
             # elif payload.emoji.name == '😈':
             #     role = discord.utils.get(guild.roles, name='Uniwinkle')
 
@@ -180,6 +182,8 @@ class Reactions(Cog):
         if message_id == 757997437213212826: # Reaction roles
             if payload.emoji.name == 'pogo': # :name: for custom, but 😂 for unicode
                 role = discord.utils.get(guild.roles, name='PoGo raiders')
+            elif payload.emoji.name == '⛑️':
+                role = discord.utils.get(guild.roles, name='Dynamax Adventurers')
             # elif payload.emoji.name == '😈':
                 # role = discord.utils.get(guild.roles, name='Uniwinkle')
 
