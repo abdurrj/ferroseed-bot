@@ -52,6 +52,11 @@ class RaidCommands(commands.Cog):
 
         return starFrameMessage, squareFrameMessage
 
+
+    @commands.command()
+    async def duduclear(self):
+        self.clearData()
+
     #Reports how many people are in the queue
     @commands.command(name="CheckQueueSize")
     async def checkQueueSize(self, ctx):
@@ -169,7 +174,7 @@ class RaidCommands(commands.Cog):
 
             # Check user timezone to correct dates
 
-            print(role_list)
+            # print(role_list)
             if 757970146622177432 in role_list: # Time zone: CDT
                 tz = pytz.timezone('US/Central')
                 timezone = "US Central"
@@ -183,9 +188,6 @@ class RaidCommands(commands.Cog):
                 tz = pytz.timezone('Canada/Newfoundland')
                 timezone = "Newfoundland"
             elif 757993399252025535 in role_list: # Time zone: PDT
-                tz = pytz.timezone('US/Pacific')
-                timezone = "Pacific"
-            elif 757970158114439190 in role_list: # Time zone: PST
                 tz = pytz.timezone('US/Pacific')
                 timezone = "Pacific"
             elif 758029475937255475 in role_list: # Time zone: WEST
