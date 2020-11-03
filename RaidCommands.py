@@ -165,33 +165,33 @@ class RaidCommands(commands.Cog):
             seed_checker = self.user
             seed_checker_roles = seed_checker.roles
             for i in seed_checker_roles:
-                role_list.append(i.name)
+                role_list.append(i.id)
 
             # Check user timezone to correct dates
 
             print(role_list)
-            if "Time zone: CDT" in role_list:
+            if 757970146622177432 in role_list: # Time zone: CDT
                 tz = pytz.timezone('US/Central')
                 timezone = "US Central"
-            elif "Time zone: EDT" in role_list:
+            elif 757970154574315541 in role_list: # Time zone: EDT
                 tz = pytz.timezone('US/Eastern')
                 timezone = "US Eastern"
-            elif "Time zone: MYT" in role_list:
+            elif 757973934669955083 in role_list: # Time zone: MYT
                 tz = pytz.timezone('Singapore')
                 timezone = "Malaysia"
-            elif "Time zone: NDT" in role_list:
+            elif 757977259893063851 in role_list: # Time zone: NDT
                 tz = pytz.timezone('Canada/Newfoundland')
                 timezone = "Newfoundland"
-            elif "Time zone: PDT" in role_list:
+            elif 757993399252025535 in role_list: # Time zone: PDT
                 tz = pytz.timezone('US/Pacific')
                 timezone = "Pacific"
-            elif "Time zone: PST" in role_list:
+            elif 757970158114439190 in role_list: # Time zone: PST
                 tz = pytz.timezone('US/Pacific')
                 timezone = "Pacific"
-            elif "Time zone: WEST" in role_list:
+            elif 758029475937255475 in role_list: # Time zone: WEST
                 tz = pytz.timezone('Europe/Lisbon')
                 timezone = "West Europe"
-            elif "Time zone: CEST" in role_list:
+            elif 757970159133655061 in role_list: # Time zone: CEST
                 tz = pytz.timezone("Europe/Oslo")
                 timezone = "Central Europe"
             else:

@@ -268,7 +268,7 @@ while True:
                 print("Trade Started!")
                 canTrade = True
                 break
-            if (end - start) >= 60:
+            if (end - start) >= 90:
                 timeOutTradeSearch()
                 timedOut()
                 canTrade = False
