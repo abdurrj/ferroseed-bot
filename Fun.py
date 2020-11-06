@@ -1,5 +1,7 @@
 from bot import *
-
+from datetime import date, timedelta, datetime
+import pytz
+import time
 
 class Fun(commands.Cog):
     def __init__(self, client):
@@ -8,6 +10,7 @@ class Fun(commands.Cog):
         self.id = None
         self.person = None
         self.idInt = None
+
 
     # Caught
     @commands.command(pass_context=True, name = 'caught', aliases=['c', 'catch', 'CAUGHT', 'CATCH', 'CAUGHT!', 'caught!', 'catch!', 'CATCH!'])
@@ -43,6 +46,7 @@ class Fun(commands.Cog):
         if ball_emoji != '<:xPoke:764576089275891772>':
             await discord.Message.add_reaction(a, ball_emoji)
 
+
     # Naught, for when you don't catch the pokemon
     @commands.command(pass_context=True, name = 'naught', aliases=['not'])
     async def naught(self, ctx):
@@ -53,6 +57,7 @@ class Fun(commands.Cog):
         embed.add_field(name='<:sherbSad:732994987683217518> escaped', value="<@"+str(id)+"> did not catch the pokemon.", inline=True)
         a = await ctx.send(embed=embed)
         await discord.Message.add_reaction(a, "<:ferroSad:735707312420945940>")
+
 
     @commands.command()
     async def hi(self, ctx):
@@ -66,6 +71,7 @@ class Fun(commands.Cog):
             await ctx.send("Hi Uni <:shinyEis:736307511191404555>")
         else:
             await ctx.send("<:ferroHappy:734285644817367050>")
+
 
     @commands.command(pass_context=True)
     async def pet(self, ctx):
@@ -98,6 +104,7 @@ class Fun(commands.Cog):
                                                     "\nI've hurt you all a total of "+ b +"x times.")
             await ctx.send(embed=embed)
 
+
     @commands.command()
     async def pets(self, ctx):
         with open(r"data/txt/ferropet.txt", "r+") as fpet:
@@ -106,14 +113,17 @@ class Fun(commands.Cog):
             hurtcount = fhurt.read()
         await ctx.send("I've been pet **"+petcount+"x** times and I've hurt you **"+hurtcount+"x** times")
 
+
     @commands.command()
     async def birbpet(self, ctx):
         await ctx.send("<a:PetTheBirb:754269160598536214>")
+
 
     # Go to sleep commands
     @commands.command()
     async def sleep(self, ctx, str):
         await ctx.send("Go to sleep, "+str+" <a:RBops2:718139698912034937>")
+
 
     # Work command
     @commands.command(name = 'work', aliases=['homework'])
@@ -124,6 +134,7 @@ class Fun(commands.Cog):
             await ctx.send("<a:RBops:718139734693773330> "+str+"! Go be productive.")
         else:
             await ctx.send(str+"! Go do the things. <:RStudy:762627515747008512>")
+
 
     @commands.command()
     async def absleep(self, ctx):
@@ -137,6 +148,42 @@ class Fun(commands.Cog):
             colour = discord.Colour.green())
             embed.add_field(name='ABDUR!!', value="Go to sleep! <a:RBops2:718139698912034937>")
             await ctx.send(embed=embed)
+
+
+    # Write a better code!
+    @commands.command()
+    async def time(self, ctx):
+        sleep_hour = 5
+        timezones = ['Singapore', 'Europe/Oslo', 'Europe/Lisbon','Canada/Newfoundland', 'US/Eastern', 'US/Central','US/Pacific']
+        timezone_names = ['Malaysia', 'Central Europe', 'West Europe', 'Newfoundland', 'US Eastern', 'US Central', 'US Pacific']
+
+        output = []
+        # only_tz_name = []
+        # only_tz_time = []
+        for i in range(0,len(timezones)):
+            tz = timezones[i]
+            tz = pytz.timezone(tz)
+            tz_name = timezone_names[i]
+            tz_hour = datetime.now(tz).strftime("%H")
+            if int(tz_hour) < sleep_hour:
+                time = datetime.now(tz).strftime("%I:%M %p") + ". Go to sleep! <a:RBops2:718139698912034937>"
+            else:
+                time = datetime.now(tz).strftime("%I:%M %p")
+            
+            timezone_time = tz_name + "\n" + time
+            # only_tz_name.append(tz_name)
+            # only_tz_time.append(time)
+            output.append(timezone_time)
+
+        times = '\n\n'.join(i for i in output)
+        # only_tz_name = '\n'.join(i for i in only_tz_name)
+        # only_tz_time = '\n'.join(i for i in only_tz_time)
+
+        embed = discord.Embed(title='Afss time!  🌎🌍🌏', color=discord.Colour.green())
+        embed.add_field(name='Time:', value=times, inline=True)
+        # embed.add_field(name="Time zone:" value=only_tz_name)
+        # embed.add_field(name="Time:", value=only_tz_time)
+        await ctx.send(embed=embed)
 
 
 def setup(client):
