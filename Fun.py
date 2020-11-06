@@ -165,9 +165,9 @@ class Fun(commands.Cog):
             tz_name = timezone_names[i]
             tz_hour = datetime.now(tz).strftime("%H")
             if int(tz_hour) < 5 or int(tz_hour)>22:
-                time = datetime.now(tz).strftime("%I:%M %p") + ". Go to sleep! <a:RBops2:718139698912034937>"
+                time = datetime.now(tz).strftime("%I:%M %p") + ". <a:RSleep:718830355381223444>"
             else:
-                time = datetime.now(tz).strftime("%I:%M %p")
+                time = datetime.now(tz).strftime("%I:%M %p") + ""
             
             timezone_time = tz_name + "\n" + time
             # only_tz_name.append(tz_name)
