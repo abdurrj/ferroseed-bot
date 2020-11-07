@@ -40,44 +40,6 @@ class Dexter(commands.Cog):
                 await ctx.send("https://img.pokemondb.net/sprites/home/" + folder +"/"+ pokemon_url_name.lower() +".png")
 
 
-    @commands.command()
-    async def ball(self, ctx, pkmn, *shiny):
-        with open(r"data/json/pokemon.json", "r") as read_file:
-            data = json.load(read_file)
-            pokemon = str((pkmn.lower()).title())
-
-        possible_names = []
-        for i in range(0, len(data)):
-            pkmn_info = data[i]
-            if pkmn_info['name'].startswith(pokemon):
-                poke_name = pkmn_info['name']
-                possible_names.append(poke_name)
-        if len(possible_names) == 0:
-            print("No match")
-        else:
-            pokemon = possible_names[0]
-    
-        for i in range(0, len(data)):
-            pokemon_dict = data[i]
-            if pokemon in (pokemon_dict.values()):
-                if shiny:
-                    if shiny[0] == "*" or shiny[0].lower() == "shiny":
-                        folder = "shiny"
-                    else:
-                        folder = "normal"
-                else:
-                    folder = "normal"
-                pokemon_url_name = pokemon.replace(" ", "-")
-                await ctx.send("https://img.pokemondb.net/sprites/home/" + folder +"/"+ pokemon_url_name.lower() +".png")
-                await ctx.send("<:bPoke:773668267331551294><:xSport:733003042773008494><:bRepeat:773668267227086909><:xFast:733002797343047690>")
-                await ctx.send("<:bGreat:773668267327094804><:bDive:773668267310317578><:xLure:733003042621751347><:xMoon:733003042705768518>")
-                await ctx.send("<:bNet:773668267322900590><:xNightmare:733002933473378435><:bQuick:773668267029692487><:xHeavy:733002891341594674>")
-                await ctx.send("<:bNest:773668267310972980><:xFriend:733002850933800991><:xSafari:733003042579808297>")
-                await ctx.send("<:bHeal:773668266979491902><:xLove:733003042668150865><:xDream:733002735749824695><:bMaster:773668267268898827>")
-                await ctx.send("<:bPremier:773668267234820107><:bTimer:773668267452923935>")
-                await ctx.send("<:bUltra:773668267306123284><:bLuxury:773668267323555850><:xLevel:733003042244263938>")
-
-
     @commands.command(name = 'dex', aliases = ['pokedex'])
     async def dex(self, ctx, pkmn, *form_input):
         ability_check = ['ability1', 'ability2', 'abilityH']

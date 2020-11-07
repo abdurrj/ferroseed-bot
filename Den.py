@@ -95,9 +95,5 @@ class Den(commands.Cog):
                 await ctx.send(wrong_den_message + " " + 'Or if you ment a galarian form, please write "galarian pokemon_name"')
 
 
-
-
-
-
 def setup(client):
     client.add_cog(Den(client))
