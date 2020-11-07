@@ -17,3 +17,7 @@ __pycache__/RaidCommands.cpython-38.pyc
 __pycache__/test_module.cpython-38.pyc
 *.txt
 Ferroseed working 2020 - 10 - 26.zip
+data/json/fc.json
+data/json/reactrole.json
+out.pk8
+out.pk8
