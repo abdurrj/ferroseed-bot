@@ -62,19 +62,19 @@ class Reactions(Cog):
         if message_id == 757997437213212826: # Reaction role
             print("Reaction role message")
             if payload.emoji.name == 'pogo': # :name: for custom, but 😂 for unicode
-                role = discord.utils.get(guild.roles, name = 'PoGo raiders')
+                role = discord.utils.get(guild.roles, id=757995249091084440) # Pogo raiders
             elif payload.emoji.name == '⛑️':
-                role = discord.utils.get(guild.roles, name='Dynamax Adventurers')
+                role = discord.utils.get(guild.roles, id=771463405239926835) # Dynamax adventurers
             elif payload.emoji.name == '📎':
-                role = discord.utils.get(guild.roles, name='she/her')
+                role = discord.utils.get(guild.roles, id=774424262173261927) # She/her
             elif payload.emoji.name == '🛋️':
-                role = discord.utils.get(guild.roles, name='he/him')
+                role = discord.utils.get(guild.roles, id=774424406923149312) # He/Him
             elif payload.emoji.name == '🖍️':
-                role = discord.utils.get(guild.roles, name='they/them')
+                role = discord.utils.get(guild.roles, id=774424474790920192) # They/Them
             elif payload.emoji.name == '🛩️':
-                role = discord.utils.get(guild.roles, name='any pronouns')
+                role = discord.utils.get(guild.roles, id=774424521260269568) # Any pronouns
             elif payload.emoji.name == '📓':
-                role = discord.utils.get(guild.roles, name='other pronouns')            
+                role = discord.utils.get(guild.roles, id=774424567283712043) # Other pronouns           
             # elif payload.emoji.name == '😈':
             #     role = discord.utils.get(guild.roles, name='Uniwinkle')
 
@@ -191,19 +191,19 @@ class Reactions(Cog):
         # Remove react to remove role start
         if message_id == 757997437213212826: # Reaction roles
             if payload.emoji.name == 'pogo': # :name: for custom, but 😂 for unicode
-                role = discord.utils.get(guild.roles, name='PoGo raiders')
+                role = discord.utils.get(guild.roles, id=757995249091084440) # Pogo raiders
             elif payload.emoji.name == '⛑️':
-                role = discord.utils.get(guild.roles, name='Dynamax Adventurers')
+                role = discord.utils.get(guild.roles, id=771463405239926835) # Dynamax adventurers
             elif payload.emoji.name == '📎':
-                role = discord.utils.get(guild.roles, name='she/her')
+                role = discord.utils.get(guild.roles, id=774424262173261927) # She/her
             elif payload.emoji.name == '🛋️':
-                role = discord.utils.get(guild.roles, name='he/him')
+                role = discord.utils.get(guild.roles, id=774424406923149312) # He/Him
             elif payload.emoji.name == '🖍️':
-                role = discord.utils.get(guild.roles, name='they/them')
+                role = discord.utils.get(guild.roles, id=774424474790920192) # They/Them
             elif payload.emoji.name == '🛩️':
-                role = discord.utils.get(guild.roles, name='any pronouns')
+                role = discord.utils.get(guild.roles, id=774424521260269568) # Any pronouns
             elif payload.emoji.name == '📓':
-                role = discord.utils.get(guild.roles, name='other pronouns') 
+                role = discord.utils.get(guild.roles, id=774424567283712043) # Other pronouns
             # elif payload.emoji.name == '😈':
                 # role = discord.utils.get(guild.roles, name='Uniwinkle')
 
