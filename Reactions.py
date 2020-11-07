@@ -65,6 +65,16 @@ class Reactions(Cog):
                 role = discord.utils.get(guild.roles, name = 'PoGo raiders')
             elif payload.emoji.name == '⛑️':
                 role = discord.utils.get(guild.roles, name='Dynamax Adventurers')
+            elif payload.emoji.name == '📎':
+                role = discord.utils.get(guild.roles, name='she/her')
+            elif payload.emoji.name == '🛋️':
+                role = discord.utils.get(guild.roles, name='he/him')
+            elif payload.emoji.name == '🖍️':
+                role = discord.utils.get(guild.roles, name='they/them')
+            elif payload.emoji.name == '🛩️':
+                role = discord.utils.get(guild.roles, name='any pronouns')
+            elif payload.emoji.name == '📓':
+                role = discord.utils.get(guild.roles, name='other pronouns')            
             # elif payload.emoji.name == '😈':
             #     role = discord.utils.get(guild.roles, name='Uniwinkle')
 
@@ -184,6 +194,16 @@ class Reactions(Cog):
                 role = discord.utils.get(guild.roles, name='PoGo raiders')
             elif payload.emoji.name == '⛑️':
                 role = discord.utils.get(guild.roles, name='Dynamax Adventurers')
+            elif payload.emoji.name == '📎':
+                role = discord.utils.get(guild.roles, name='she/her')
+            elif payload.emoji.name == '🛋️':
+                role = discord.utils.get(guild.roles, name='he/him')
+            elif payload.emoji.name == '🖍️':
+                role = discord.utils.get(guild.roles, name='they/them')
+            elif payload.emoji.name == '🛩️':
+                role = discord.utils.get(guild.roles, name='any pronouns')
+            elif payload.emoji.name == '📓':
+                role = discord.utils.get(guild.roles, name='other pronouns') 
             # elif payload.emoji.name == '😈':
                 # role = discord.utils.get(guild.roles, name='Uniwinkle')
 
