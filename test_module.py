@@ -26,7 +26,7 @@ class test_module(commands.Cog):
     async def fc_new(self, ctx, *usid):
         with open(r"data/json/fc.json", encoding='utf-8') as fc_dict:
             fc_dict = json.load(fc_dict)
-        print(fc_dict)
+        # print(fc_dict)
         if usid:
             usid = int(''.join(i for i in usid[0] if i.isdigit()))
         else:
@@ -40,7 +40,7 @@ class test_module(commands.Cog):
             for i in user_dict_keys:
                 info = info + "\n" + i + ": **" + user_dict[i] + "**" 
         
-        print(info)
+        # print(info)
         await ctx.send(info)
 
     @commands.command()
@@ -48,7 +48,7 @@ class test_module(commands.Cog):
         arg_split = arg.split(" ")
         check = arg_split[0]
         text = arg.split(' ', 1)[1]
-        key = (text.split(',')[0]).strip
+        key = (text.split(',')[0]).strip()
         with open(r"data/json/fc.json", encoding='utf-8') as fc_dict:
             fc_dict = json.load(fc_dict)
         
@@ -60,21 +60,38 @@ class test_module(commands.Cog):
             fc_dict[str(usid)] = {}
             user_dict = fc_dict[str(usid)]
         
-        if check == "change" or check == "add":
+        if check == "add" or check == "edit":
             value = (text.split(',', 1)[1]).strip()
             user_dict[key] = value
             # print(user_dict)
         elif check == "remove":
             del user_dict[key]
-        
+        elif check == "change":
+            old_key = key
+            new_key = arg_split[2]
+            new_user_dict = user_dict
+            dict_info = new_user_dict.pop(old_key)
+            new_user_dict[new_key] = dict_info
+            user_dict = new_user_dict
         else:
             print("nothing to do")
 
         fc_dict[str(usid)] = user_dict
         new_dict = fc_dict
 
-        with open("data/json/fc.json", "w", encoding='utf-8') as fc_dict:
-            json.dump(new_dict, fc_dict, indent=4, ensure_ascii=False)
+        try:
+            with open("data/json/fc_test.json", "w", encoding='utf-8') as fc_dict:
+                json.dump(new_dict, fc_dict, indent=4, ensure_ascii=False)
+                proceed = "yes"
+        except:
+            proceed = "false"
+        
+        if proceed == "yes":
+            with open("data/json/fc.json", "w", encoding='utf-8') as fc_dict:
+                json.dump(new_dict, fc_dict, indent=4, ensure_ascii=False)
+            await ctx.send("fc updated")
+        else:
+            print("something went wrong, fc not updated")
 
 
     # @commands.command()

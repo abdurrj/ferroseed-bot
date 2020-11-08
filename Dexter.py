@@ -40,27 +40,95 @@ class Dexter(commands.Cog):
                 await ctx.send("https://img.pokemondb.net/sprites/home/" + folder +"/"+ pokemon_url_name.lower() +".png")
 
 
-    @commands.command(name = 'dex', aliases = ['pokedex'])
-    async def dex(self, ctx, pkmn, *form_input):
-        ability_check = ['ability1', 'ability2', 'abilityH']
-        egg_group_check = ['eggGroup1', 'eggGroup2']
-        forms_check = ['Male', 'male', 'Female', 'female', 'M', 'm', 'F', 'f', 'Alolan', 'alolan', 'Gigantamax', 'Gmax', 'Mega', 'mega', 'MegaX', 'megax', 'MegaY', 'megay', 'Ice Rider', 'Ice', 'ice','Shadow Rider','Shadow','shadow']
-        stat_changing_forms_name_first = ['Male', 'male', 'Female', 'female', 'M', 'm', 'F', 'f',]
-        stat_changing_forms_name_last = ['Alolan', 'Mega', 'MegaX', 'MegaY', 'Ice Rider', 'Shadow Rider','ice','Ice','shadow','Shadow']
-        typing_check = ['type1', 'type2']
-        with open(r"data/json/pokemon.json", "r") as read_file:
-            data = json.load(read_file)
-        pokemon = str((pkmn.lower()).title())
+    @commands.command()
+    async def dyna(self, ctx, *, pokemon):
+        with open(r"data/json/da_mons.json", encoding='utf-8') as da_mon_dict:
+            data = json.load(da_mon_dict)
+        pokemon = (pokemon.lower()).title()
 
         possible_names = []
-        poke_dict_forms = []
         for i in range(0, len(data)):
             pkmn_info = data[i]
             if pkmn_info['name'].startswith(pokemon):
                 poke_name = pkmn_info['name']
                 possible_names.append(poke_name)
-                poke_dict_forms = pkmn_info["forms"]
                 # print(poke_dict_forms)
+        if len(possible_names) == 0:
+            print("No match")
+        else:
+            pokemon = possible_names[0]
+
+        for i in range(0, len(data)):
+            pkmn_info = data[i]
+            if pokemon in (pkmn_info.values()):
+                ability = pkmn_info["Ability"]
+                pokemon_name = pkmn_info["name"]
+                attacks = '\n'.join(attack for attack in pkmn_info["Attacks"])
+            
+
+        embed = discord.Embed(title=pokemon_name)
+        embed.add_field(name="Ability", value=ability, inline=False)
+        embed.add_field(name="Attacks", value=attacks)
+        await ctx.send(embed=embed)
+    
+    
+    @commands.command()
+    async def dynadd(self, ctx, *, info):
+        # print(type(info))
+        # print(info)
+        info_split = info.split("\n")
+        # print(info_split)
+        with open(r"data/json/da_mons.json", encoding='utf-8') as da_mon_dict:
+            da_mon_dict = json.load(da_mon_dict)
+        name = info_split[0]
+        ability = info_split[2]
+        attacks = [info_split[5]] + [info_split[6]] + [info_split[7]] + [info_split[8]]
+        new_poke = {"name":name, "Ability":ability, "Attacks":attacks}
+        da_mon_dict.append(new_poke)
+        print(type(da_mon_dict))
+        print(da_mon_dict)
+        new_dict = da_mon_dict
+        try:
+            with open(r"data/json/da_mons.json", "w", encoding='utf-8') as da_mon_dict:
+                json.dump(new_dict, da_mon_dict, indent=4, ensure_ascii=False)
+            await ctx.send("added "+name) 
+        except:
+            print("something went wrong")
+
+
+    @commands.command(name = 'dex', aliases = ['pokedex'])
+    async def dex(self, ctx, pkmn, *form_input):
+        ability_check = ['ability1', 'ability2', 'abilityH']
+        egg_group_check = ['eggGroup1', 'eggGroup2']
+        forms_check = ['Galar', 'Galarian', 'galar', 'galarian', 'Male', 'male', 'Female', 'female', 'M', 'm', 'F', 'f', 'Alolan', 'alolan', 'Gigantamax', 'Gmax', 'Mega', 'mega', 'MegaX', 'megax', 'MegaY', 'megay', 'Ice Rider', 'Ice', 'ice','Shadow Rider','Shadow','shadow']
+        stat_changing_forms_name_first = ['Male', 'male', 'Female', 'female', 'M', 'm', 'F', 'f',]
+        stat_changing_forms_name_last = ['galar', 'Galar', 'Galarian', 'galarian', 'Alolan', 'Mega', 'MegaX', 'MegaY', 'Ice Rider', 'Shadow Rider','ice','Ice','shadow','Shadow']
+        typing_check = ['type1', 'type2']
+        with open(r"data/json/pokemon.json", "r") as read_file:
+            data = json.load(read_file)
+        pokemon = ""
+        possible_names = []
+        poke_dict_forms = []
+        if pkmn.isdigit():
+            for i in range(0, len(data)):
+                pkmn_info = data[i]
+                if pkmn_info['dexId'] == int(pkmn):
+                    poke_name = pkmn_info['name']
+                    possible_names.append(poke_name)
+                    poke_dict_forms = pkmn_info["forms"]
+                else:
+                    await ctx.send("No match for dex id")
+                    
+        else:
+            pokemon = str((pkmn.lower()).title())
+            for i in range(0, len(data)):
+                pkmn_info = data[i]
+                if pkmn_info['name'].startswith(pokemon):
+                    poke_name = pkmn_info['name']
+                    possible_names.append(poke_name)
+                    poke_dict_forms = pkmn_info["forms"]
+                    # print(poke_dict_forms)
+        
         if len(possible_names) == 0:
             print("No match")
         else:
@@ -101,6 +169,8 @@ class Dexter(commands.Cog):
                         form = 'Ice Rider'
                     elif form == 'shadow' or form == 'Shadow':
                         form = 'Shadow Rider'
+                    elif form in ['galar', 'galarian', 'Galar', 'Galarian']:
+                        form = "Galarian"
             else:
                 form = ""
 
