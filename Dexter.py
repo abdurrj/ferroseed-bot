@@ -116,8 +116,6 @@ class Dexter(commands.Cog):
                     poke_name = pkmn_info['name']
                     possible_names.append(poke_name)
                     poke_dict_forms = pkmn_info["forms"]
-                else:
-                    await ctx.send("No match for dex id")
                     
         else:
             pokemon = str((pkmn.lower()).title())
