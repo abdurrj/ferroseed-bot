@@ -221,9 +221,11 @@ class Dexter(commands.Cog):
 
                 dens = pkmn_info["dens"]
                 sword_dens_list = dens["sword"]
-                sword_dens = ', '.join(sword_dens_list[i] for i in range(0, len(sword_dens_list)) if len(sword_dens_list) is not None)
+                sword_dens = ', '.join("["+str(sword_dens_list[i])+"]" + "(https://www.serebii.net/swordshield/maxraidbattles/den"+str(sword_dens_list[i])+".shtml)" for i in range(0, len(sword_dens_list)) if len(sword_dens_list) is not None)
+                # sword_dens = ', '.join(sword_dens_list[i] for i in range(0, len(sword_dens_list)) if len(sword_dens_list) is not None)
                 shield_dens_list = dens["shield"]
-                shield_dens = ', '.join(shield_dens_list[i] for i in range(0, len(shield_dens_list)) if len(shield_dens_list) is not None)
+                shield_dens = ', '.join("["+str(shield_dens_list[i])+"]" + "(https://www.serebii.net/swordshield/maxraidbattles/den"+str(shield_dens_list[i])+".shtml)" for i in range(0, len(shield_dens_list)) if len(shield_dens_list) is not None)
+                # shield_dens = ', '.join(shield_dens_list[i] for i in range(0, len(shield_dens_list)) if len(shield_dens_list) is not None)
                 pokemon_forms = []
                 if len(poke_dict_forms) !=0:
                     for i in range(0, len(poke_dict_forms)):

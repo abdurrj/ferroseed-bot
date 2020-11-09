@@ -82,15 +82,20 @@ class Den(commands.Cog):
                         dens = pkmn_info["dens"]
                         sword_dens_list = dens["sword"]
                         shield_dens_list = dens["shield"]
-                        sword_dens = ', '.join(sword_dens_list[i] for i in range(0, len(sword_dens_list)) if len(sword_dens_list) is not None)
-                        shield_dens = ', '.join(shield_dens_list[i] for i in range(0, len(shield_dens_list)) if len(shield_dens_list) is not None)
+                        # sword_dens = ', '.join(sword_dens_list[i] for i in range(0, len(sword_dens_list)) if len(sword_dens_list) is not None)
+                        sword_dens = ', '.join("["+str(sword_dens_list[i])+"]" + "(https://www.serebii.net/swordshield/maxraidbattles/den"+str(sword_dens_list[i])+".shtml)" for i in range(0, len(sword_dens_list)) if len(sword_dens_list) is not None)
+                        # shield_dens = ', '.join(shield_dens_list[i] for i in range(0, len(shield_dens_list)) if len(shield_dens_list) is not None)
+                        shield_dens = ', '.join("["+str(shield_dens_list[i])+"]" + "(https://www.serebii.net/swordshield/maxraidbattles/den"+str(shield_dens_list[i])+".shtml)" for i in range(0, len(shield_dens_list)) if len(shield_dens_list) is not None)
                         dencheck = sword_dens + shield_dens
                         if dencheck == "":
                             print("No dens")
                             await ctx.send("Sorry, I can't find it in any den")
                         else:
                             dens = pokemon_name.title() + " is in these dens:\nSword: " + sword_dens + "\nShield: " + shield_dens
-                            await ctx.send(dens)
+                            embed = discord.Embed(title=pokemon_name.title())
+                            embed.add_field(name="Dens:", value="Sword: " + sword_dens + "\n" + "Shield: " + shield_dens, inline=False)
+                            # embed.add_field(name="Shield:", value=shield_dens)
+                            await ctx.send(embed=embed)
             else:
                 await ctx.send(wrong_den_message + " " + 'Or if you ment a galarian form, please write "galarian pokemon_name"')
 
