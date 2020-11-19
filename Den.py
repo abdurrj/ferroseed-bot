@@ -97,7 +97,7 @@ class Den(commands.Cog):
                             # embed.add_field(name="Shield:", value=shield_dens)
                             await ctx.send(embed=embed)
             else:
-                await ctx.send(wrong_den_message + " " + 'Or if you ment a galarian form, please write "galarian pokemon_name"')
+                await ctx.send(wrong_den_message + " " + 'Or if you ment a galarian form, please write "pokemon_name galarian"')
 
 
 def setup(client):
