@@ -1,6 +1,5 @@
 from bot import *
 
-
 class Dexter(commands.Cog):
     def __init__(self, client):
 
@@ -52,7 +51,6 @@ class Dexter(commands.Cog):
             if pkmn_info['name'].startswith(pokemon):
                 poke_name = pkmn_info['name']
                 possible_names.append(poke_name)
-                # print(poke_dict_forms)
         if len(possible_names) == 0:
             print("No match")
         else:
@@ -64,7 +62,6 @@ class Dexter(commands.Cog):
                 ability = pkmn_info["Ability"]
                 pokemon_name = pkmn_info["name"]
                 attacks = '\n'.join(attack for attack in pkmn_info["Attacks"])
-            
 
         embed = discord.Embed(title=pokemon_name)
         embed.add_field(name="Ability", value=ability, inline=False)
@@ -74,10 +71,7 @@ class Dexter(commands.Cog):
     
     @commands.command()
     async def dynadd(self, ctx, *, info):
-        # print(type(info))
-        # print(info)
         info_split = info.split("\n")
-        # print(info_split)
         with open(r"data/json/da_mons.json", encoding='utf-8') as da_mon_dict:
             da_mon_dict = json.load(da_mon_dict)
         name = info_split[0]

@@ -77,7 +77,12 @@ class Fun(commands.Cog):
     async def pet(self, ctx):
         id = ctx.message.author.id
         p = Person(id, ctx.message.channel, ctx.message.author)
-        petpet = randrange(12)  # randrange(*), increase * value to increase chance of petting Ferroseed
+        if ctx.message.author.id == 138411165075243008:
+            petpet = 12
+            await ctx.send("ABDUR!! <a:ferroexcitefast:755216958823071845>")
+            await asyncio.sleep(1)
+        else:
+            petpet = randrange(12)  # randrange(*), increase * value to increase chance of petting Ferroseed
         if petpet >= 5:         # petpet >= **: Lower the number on ** to increase chance of petting Ferroseed (standard is 6)
             with open(r"data/txt/ferropet.txt", "r+") as fpet:
                 petcount = fpet.read()

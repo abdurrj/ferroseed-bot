@@ -26,21 +26,6 @@ class Functions(commands.Cog):
 
 
     @commands.command()
-    async def fc(self, ctx, *args):
-        # p = Person(id, ctx.message.channel, ctx.message.author)
-        filename = r"data/csv/friendcodes.csv"
-        df = pd.read_csv(filename)
-        if args:
-            userid = int(''.join(i for i in args[0] if i.isdigit()))
-        else:
-            userid = ctx.message.author.id
-        df = pd.read_csv(filename)
-        for index, row in df.iterrows():
-            if row["usid"] == int(userid):
-                await ctx.send((row[2] + "\n" + row[3] + "\n" + row[4] + "\n" + row[5] +  "\n" + row[6] +  "\n" + row[7]))
-
-
-    @commands.command()
     async def flip(self, ctx):
         options = ['Heads','Tails','Heads','Tails','Heads','Tails','Heads','Tails','Heads','Tails']
         selection = random.choice(options)
@@ -134,6 +119,7 @@ class Functions(commands.Cog):
                         seed = random.randrange(sys.maxsize)
                         random.Random(seed)
                         user_list = [user async for user in reaction.users()]
+                        print(user_list)
                         participants = int(len(user_list))
                         if int(wnr_amount) > int(participants):
                             winner = random.sample(user_list, k=int(participants))
@@ -145,6 +131,7 @@ class Functions(commands.Cog):
                             winner_id = ', '.join([''.join('<@' + str(winner.id) + '>') for winner in winner])
                         await command_user.send("\n"+str(participants) + " participants for the emoji: "+ str(reaction) + "\nWinner name(s):\n"
                                     + str(winner_names)+"\nWinner ID:\n```"+str(winner_id) + "```")
+                        
             else:
                 await ctx.send("Sorry, I can't find your message in <#766277566934810634>. Does it have the keyword: " + keyword + ""
                         "\nI can only see your last message, you can edit the message to add the keyword though!")
