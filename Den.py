@@ -82,10 +82,18 @@ class Den(commands.Cog):
                         dens = pkmn_info["dens"]
                         sword_dens_list = dens["sword"]
                         shield_dens_list = dens["shield"]
+                        if len(sword_dens_list) == 0:
+                            sword_dens = "None"
+                        else:
+                            sword_dens = ', '.join("["+str(sword_dens_list[i])+"]" + "(https://www.serebii.net/swordshield/maxraidbattles/den"+str(sword_dens_list[i])+".shtml)" for i in range(0, len(sword_dens_list)) if len(sword_dens_list) is not None)
                         # sword_dens = ', '.join(sword_dens_list[i] for i in range(0, len(sword_dens_list)) if len(sword_dens_list) is not None)
-                        sword_dens = ', '.join("["+str(sword_dens_list[i])+"]" + "(https://www.serebii.net/swordshield/maxraidbattles/den"+str(sword_dens_list[i])+".shtml)" for i in range(0, len(sword_dens_list)) if len(sword_dens_list) is not None)
+                        
+                        if len(shield_dens_list) == 0:
+                            shield_dens = "None"
+                        else:
+                            shield_dens = ', '.join("["+str(shield_dens_list[i])+"]" + "(https://www.serebii.net/swordshield/maxraidbattles/den"+str(shield_dens_list[i])+".shtml)" for i in range(0, len(shield_dens_list)) if len(shield_dens_list) is not None)
                         # shield_dens = ', '.join(shield_dens_list[i] for i in range(0, len(shield_dens_list)) if len(shield_dens_list) is not None)
-                        shield_dens = ', '.join("["+str(shield_dens_list[i])+"]" + "(https://www.serebii.net/swordshield/maxraidbattles/den"+str(shield_dens_list[i])+".shtml)" for i in range(0, len(shield_dens_list)) if len(shield_dens_list) is not None)
+                        
                         dencheck = sword_dens + shield_dens
                         if dencheck == "":
                             print("No dens")
@@ -93,8 +101,8 @@ class Den(commands.Cog):
                         else:
                             dens = pokemon_name.title() + " is in these dens:\nSword: " + sword_dens + "\nShield: " + shield_dens
                             embed = discord.Embed(title=pokemon_name.title())
-                            embed.add_field(name="Dens:", value="Sword: " + sword_dens + "\n" + "Shield: " + shield_dens, inline=False)
-                            # embed.add_field(name="Shield:", value=shield_dens)
+                            embed.add_field(name="Sword dens:", value=sword_dens, inline=False)
+                            embed.add_field(name="Shield dens:", value=shield_dens, inline=False)
                             await ctx.send(embed=embed)
             else:
                 await ctx.send(wrong_den_message + " " + 'Or if you ment a galarian form, please write "pokemon_name galarian"')
