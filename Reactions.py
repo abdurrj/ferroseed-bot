@@ -8,28 +8,8 @@ class Reactions(Cog):
     def __init__(self, client):
         self.client = client
         
-"""     @Cog.listener("on_message")
-    async def greet(self,message):
-        Cheers= ["Hi", "hi", "Hello", "hello"]
-        if message.content in Cheers:
-            await message.channel.send('Hello again')
-            await self.client.process_commands(message)
 
-    @Cog.listener("on_message")
-    async def agree(self,message):
-        Agree = ["yes", "yep", "ok"]
-        if message.content in Agree:
-            await message.channel.send('good')
-            await self.client.process_commands(message)
-
-
-    @Cog.listener("on_message")
-    async def dAgree(self,message):
-        dAgree= ["no", "nope"]
-        if message.content in dAgree:
-            await message.channel.send('why')
-            await self.client.process_commands(message) """
-
+        
     @Cog.listener()
     async def on_raw_reaction_add(self, payload):
         guild_id = payload.guild_id

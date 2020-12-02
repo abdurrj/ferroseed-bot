@@ -240,10 +240,6 @@ class RaidCommands(commands.Cog):
                     "\nSkips to square shiny:......... " + str(squareFrameMessage) +
                     "\nDate for square shiny:......... " + squaredate +
                     "\nDate, 3 skips before shiny:.... " + squaresave + "```")
-
-                await self.userChannel.send("```Remember that the bot shows how many skips to shiny."
-                "\nToday is 0, tomorrow is 1."
-                "\nFor the sake of storage, the seed is sent to your DMs. It is also posted below for easy copy from phones.```")
                 await self.user.send(seed)
                 await self.userChannel.send(seed)
                 await self.userChannel.send("<https://leanny.github.io/seedchecker/index.html>")

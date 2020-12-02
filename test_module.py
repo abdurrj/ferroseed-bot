@@ -13,7 +13,7 @@ class test_module(commands.Cog):
         self.person = None
         self.idInt = None
 
-    @client.command()
+    @commands.command()
     async def nicktest(self, ctx):
         user = ctx.message.author
         if user.nick:

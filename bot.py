@@ -28,7 +28,7 @@ admin_users_id = [138411165075243008]
 client = commands.Bot(command_prefix = '!', intents=intents)
 client.remove_command('help')
 
-extensions = ['RaidCommands', 'Den', 'Dexter', 'Fun', 'Functions', 'test_module', 'Reactions', 'Hosting', 'fc']
+extensions = ['RaidCommands', 'Den', 'Dexter', 'Fun', 'Functions', 'test_module', 'Reactions', 'Hosting', 'fc', 'countdown']
 
 
 @client.event
