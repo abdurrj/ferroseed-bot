@@ -1,17 +1,9 @@
 from bot import *
-# 300 with the current queue and the reporting system
-# will make sure everyone has a place and can see when they will be served
-# q = ArrayQueue(300)
 
-# until possible merge and improvement, setting it to 20 as from the previous commits
 
 class Den(commands.Cog):
     def __init__(self, client):
-        self.userChannel = None
-        self.user = None
-        self.id = None
-        self.person = None
-        self.idInt = None
+        self.client = client
 
 
     @commands.command()

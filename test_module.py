@@ -5,13 +5,8 @@ import re
 
 class test_module(commands.Cog):
     def __init__(self, client):
-        # self.checkDataReady.start()
         self.client = client
-        self.userChannel = None
-        self.user = None
-        self.id = None
-        self.person = None
-        self.idInt = None
+
 
     @commands.command()
     async def nicktest(self, ctx):
@@ -25,7 +20,6 @@ class test_module(commands.Cog):
     @commands.command()
     async def testcommand(self, ctx):
         print("testing, testing.. 1.. 2... 3... 4?")
-        print(self.user)
 
     @commands.command()
     async def emojiprint(self,ctx, *, message):
@@ -51,7 +45,6 @@ class test_module(commands.Cog):
                 reaction, user = await self.client.wait_for("reaction_add", timeout=60)
                 if str(reaction) == "✅":
                     mess = await ctx.channel.fetch_message(mess.id)
-                    reaction_list = mess.reactions
                     for reactions in mess.reactions:
                         if str(reactions) == "✅":
                             user_list = [user async for user in reactions.users() if user != self.client.user]

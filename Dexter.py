@@ -2,12 +2,7 @@ from bot import *
 
 class Dexter(commands.Cog):
     def __init__(self, client):
-
-        self.userChannel = None
-        self.user = None
-        self.id = None
-        self.person = None
-        self.idInt = None
+        self.client = client
 
     @commands.command()
     async def sprite(self, ctx, pkmn, *shiny):
@@ -249,7 +244,6 @@ class Dexter(commands.Cog):
 
 
                 pokemon_url_name = pokemon.replace(" ", "-")
-                # print(pokemon_url_name)
 
                 embed = discord.Embed(title="__#" + str(pkmn_info["dexId"]) +  " " + pokemon_name + "__", colour=0xFF0000)
                 embed.add_field(name="Misc. Info", value=typing + "\n" + catch_rate + "\nEgg Groups: `" + egg_groups + "`\n" + pokemon_forms)
@@ -276,7 +270,8 @@ class Dexter(commands.Cog):
                 await ctx.send(embed=embed)
 
 
-""" Old dex command    
+""" 
+Old dex command    
     @commands.command(name = 'dex', aliases = ['pokedex'])
     async def dex(self, ctx, *, pkmn):
         ability_check = ['ability1', 'ability2', 'abilityH']
@@ -340,7 +335,9 @@ class Dexter(commands.Cog):
                 pokemon_url_name = pokemon.replace(" ", "-")
                 embed.set_image(url="https://img.pokemondb.net/sprites/home/" + folder +"/"+ pokemon_url_name.lower() +".png")
                 
-                await ctx.send(embed=embed) """
+                await ctx.send(embed=embed) 
+"""
+
 
 def setup(client):
     client.add_cog(Dexter(client))

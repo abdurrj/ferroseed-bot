@@ -3,13 +3,6 @@ from bot import *
 class Hosting(commands.Cog):
     def __init__(self, client):
         self.client = client
-        self.userChannel = None
-        self.user = None
-        self.id = None
-        self.person = None
-        self.idInt = None
-
-
 
     @commands.command()
     async def host(self, ctx, *, chaname):

@@ -5,13 +5,7 @@ import re
 
 class fc(commands.Cog):
     def __init__(self, client):
-        # self.checkDataReady.start()
         self.client = client
-        self.userChannel = None
-        self.user = None
-        self.id = None
-        self.person = None
-        self.idInt = None
 
     @commands.command()
     async def fc_old(self, ctx, *args):
@@ -31,7 +25,7 @@ class fc(commands.Cog):
     async def fc(self, ctx, *usid):
         with open(r"data/json/fc.json", encoding='utf-8') as fc_dict:
             fc_dict = json.load(fc_dict)
-        # print(fc_dict)
+
         if usid:
             usid = int(''.join(i for i in usid[0] if i.isdigit()))
         else:
@@ -73,13 +67,13 @@ class fc(commands.Cog):
             for i in emoji_list:
                 await check_del.add_reaction(i)
 
-            def check(reaction, user):
+            def checker(reaction, user):
                 return user == ctx.author and str(reaction.emoji) in emoji_list
                 # This makes sure nobody except the command sender can interact with the "menu"
 
             while True:
                 try:
-                    reaction, user = await self.client.wait_for("reaction_add", timeout=15, check=check)
+                    reaction, user = await self.client.wait_for("reaction_add", timeout=15, check=checker)
 
                     if str(reaction.emoji) == "✅":
                         await  discord.Message.delete(check_del)
@@ -107,7 +101,6 @@ class fc(commands.Cog):
             print("nothing to do")
             await ctx.send(
                 "I'm not sure what you want me to do <:thonk:733808013046972467>"
-                #"\nYou can try fc_help if you are unsure what you're doing"
             )
             return
 

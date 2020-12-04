@@ -17,7 +17,6 @@ class countdown(commands.Cog):
     @commands.command()
     async def view_time(self, ctx):
         if self.time_left == 0:
-            print("00:00")
             await ctx.send("00:00")
         else:
             minutes, seconds = divmod(self.time_left, 60)
@@ -37,9 +36,6 @@ class countdown(commands.Cog):
     async def countdown(self):
         if self.time_left>0:
             self.time_left -= 1
-            # minutes, seconds = divmod(self.time_left, 60)
-            # timeformat = "{:02d}:{:02d}".format(minutes, seconds)
-            # print(timeformat)
 
 
 def setup(client):

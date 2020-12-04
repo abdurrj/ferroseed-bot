@@ -23,3 +23,9 @@ out.pk8
 out.pk8
 data/json/fc_test.json
 data/json/da_mons – Kopi.json
+.vscode/settings.json
+__pycache__/countdown.cpython-38.pyc
+__pycache__/fc.cpython-38.pyc
+__pycache__/Hosting.cpython-38.pyc
+*.pyc
+*.pyc

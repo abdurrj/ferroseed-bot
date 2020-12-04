@@ -5,11 +5,7 @@ import time
 
 class Fun(commands.Cog):
     def __init__(self, client):
-        self.userChannel = None
-        self.user = None
-        self.id = None
-        self.person = None
-        self.idInt = None
+        self.client = client
 
 
     # Caught
