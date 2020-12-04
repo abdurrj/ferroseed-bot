@@ -2,11 +2,7 @@ from bot import *
 
 class Functions(commands.Cog):
     def __init__(self, client):
-        self.userChannel = None
-        self.user = None
-        self.id = None
-        self.person = None
-        self.idInt = None
+        self.client = client
 
 
     @commands.command()
@@ -167,6 +163,19 @@ class Functions(commands.Cog):
                     await discord.Message.add_reaction(ferro_message, "<:RParty:706007725070483507>")
         else:
             await ctx.send("<a:RQuestion:713380476357705740> Did you input (positive) numbers?")
+
+    @commands.command()
+    async def set_game(self, ctx, a=None):
+        activity = discord.Game(a)
+        await self.client.change_presence(activity=activity)
+
+    @commands.command()
+    async def stop_game(self, ctx):
+        await self.client.change_presence(activity=None)
+
+    @commands.command()
+    async def set_watching(self, ctx, w=None):
+        await self.client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=w))
 
 
 """     # Remove this if it has no more use
