@@ -1,4 +1,5 @@
 from bot import *
+import json
 
 class Dexter(commands.Cog):
     def __init__(self, client):

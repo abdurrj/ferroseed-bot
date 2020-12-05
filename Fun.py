@@ -1,7 +1,7 @@
 from bot import *
-from datetime import date, timedelta, datetime
+from datetime import datetime
 import pytz
-import time
+import random
 
 class Fun(commands.Cog):
     def __init__(self, client):

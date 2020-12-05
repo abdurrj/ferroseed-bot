@@ -1,7 +1,6 @@
 from bot import *
-import json
 from discord.utils import get, find
-import re
+import datetime
 
 class test_module(commands.Cog):
     def __init__(self, client):
@@ -61,6 +60,43 @@ class test_module(commands.Cog):
             except asyncio.TimeoutError:
                 await mess.edit(embed = embed_1)
                 break
+
+
+    @commands.command()
+    async def alarm(self, ctx, m:int=0, s:int=0):
+        message = await ctx.send("alarm will ring in: {:02d}:{:02d}".format(m,s))
+        alarmtime = m*60 + s
+        while alarmtime>0:
+            minutes, seconds = divmod(alarmtime, 60)
+            timeformat = "{:02d}:{:02d}".format(minutes, seconds)
+            alarmtime -=5
+            await message.edit(content="alarm will ring in: "+timeformat)
+            await asyncio.sleep(5)
+        
+        minutes, seconds = divmod(alarmtime, 60)
+        timeformat = "{:02d}:{:02d}".format(minutes, seconds)
+        await message.edit(content="alarm will ring in: "+timeformat)
+        await ctx.send("ringringring {}".format(ctx.author.mention))
+
+    @commands.command()
+    async def reactiontest(self, ctx, set_time:int):
+        my_msg = await ctx.send("Hello")
+        await my_msg.add_reaction("🎉")
+        await asyncio.sleep(set_time)
+        new_msg = await ctx.channel.fetch_message(my_msg.id)
+        user_list = [u for u in await new_msg.reactions[0].users().flatten() if u != self.client.user]
+        if len(user_list) == 0:
+            await ctx.send("No one reacted.")
+        else:
+            winner = random.choice(user_list)
+            # await ctx.send(f"{winner.mention}")
+            e = discord.Embed()
+            e.title = "Giveaway ended!"
+            e.description = f"You won:"
+            e.timestamp = datetime.datetime.utcnow()
+            e.set_footer(text=f'{self.client.user.name}',
+                         icon_url=self.client.user.avatar_url)
+            await ctx.send(f"{winner.mention}", embed=e)
 
 """     @commands.command()
     async def reactrole(self, ctx, reaction, role):

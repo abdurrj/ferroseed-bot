@@ -8,17 +8,8 @@ from discord.utils import find, get
 from discord import Member
 from random import randint, randrange
 from io import StringIO, BytesIO
-import random
 import pandas as pd
-import numpy as np
-import argparse
 import asyncio
-import sys
-import time
-import csv
-import re
-import emoji
-import json
 
 
 TOKEN = open("token.txt","r").readline()

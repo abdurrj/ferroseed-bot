@@ -1,4 +1,5 @@
 from bot import *
+import json
 
 
 class Den(commands.Cog):

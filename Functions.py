@@ -1,4 +1,7 @@
 from bot import *
+import random
+import emoji
+import re
 
 class Functions(commands.Cog):
     def __init__(self, client):
