@@ -9477,7 +9477,9 @@
             "sword": [],
             "shield": []
         },
-        "forms": []
+        "forms": [
+            "Galarian"
+        ]
     },
     {
         "dexId": 199,
