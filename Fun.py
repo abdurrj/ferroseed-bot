@@ -17,9 +17,7 @@ class Fun(commands.Cog):
                     'heavy' : '<:xHeavy:733002891341594674>', 'friend' : '<:xFriend:733002850933800991>', 'fast' : '<:xFast:733002797343047690>', 'dream' : '<:xDream:733002735749824695>'}
         
         # List of colours: (0)Light blue, (1)light green, (2)purple, (3)yellow, (4)white, (5)peach, (6)pink, (7)Blue, (8)Honey yellow
-        colour_list = [0x96e6ff, 0x62eb96, 0x9662eb, 0xffe36f, 0xe5e5e5, 0xf7b897, 0xffb3ba, 0x21b1ff, 0xffd732]
-        a = randint(0,8)
-        colour = colour_list[a]
+        colour = random.choice([0x96e6ff, 0x62eb96, 0x9662eb, 0xffe36f, 0xe5e5e5, 0xf7b897, 0xffb3ba, 0x21b1ff, 0xffd732])
         if ball:
             ball_used = str(ball[0])
             if ball_used in ball_list.values():
@@ -37,28 +35,26 @@ class Fun(commands.Cog):
         colour = colour)
         embed.add_field(name=ball_emoji + " Caught!", value="<:RParty:706007725070483507> <@"+str(id)+"> has caught the pokemon! <:RParty:706007725070483507>", inline=True)
         a = await ctx.send(embed=embed)
-        await discord.Message.add_reaction(a, "<:ferroHappy:734285644817367050>")
-        await discord.Message.add_reaction(a, "<:sayHeart:741079360462651474>")
+        await a.add_reaction("<:ferroHappy:734285644817367050>")
+        await a.add_reaction("<:sayHeart:741079360462651474>")
         if ball_emoji != '<:xPoke:764576089275891772>':
-            await discord.Message.add_reaction(a, ball_emoji)
+            await a.add_reaction(ball_emoji)
 
 
     # Naught, for when you don't catch the pokemon
     @commands.command(pass_context=True, name = 'naught', aliases=['not'])
     async def naught(self, ctx):
         id = ctx.message.author.id
-        p = Person(id, ctx.message.channel, ctx.message.author)
         embed = discord.Embed(
         colour = discord.Colour.red())
         embed.add_field(name='<:sherbSad:732994987683217518> escaped', value="<@"+str(id)+"> did not catch the pokemon.", inline=True)
         a = await ctx.send(embed=embed)
-        await discord.Message.add_reaction(a, "<:ferroSad:735707312420945940>")
+        await a.add_reaction("<:ferroSad:735707312420945940>")
 
 
     @commands.command()
     async def hi(self, ctx):
         id = ctx.message.author.id
-        p = Person(id, ctx.message.channel, ctx.message.author)
         if ctx.message.author.id in [673257997191086080]: #Blank
             await ctx.send("Hello, Team Soul leader Tomador! <:ferroHappy:734285644817367050>")
         if ctx.message.author.id in [357179587073146893]: # Haywire
@@ -72,7 +68,6 @@ class Fun(commands.Cog):
     @commands.command(pass_context=True)
     async def pet(self, ctx):
         id = ctx.message.author.id
-        p = Person(id, ctx.message.channel, ctx.message.author)
         petpet = randrange(12)  # randrange(*), increase * value to increase chance of petting Ferroseed
         if petpet >= 5:         # petpet >= **: Lower the number on ** to increase chance of petting Ferroseed (standard is 6)
             with open(r"data/txt/ferropet.txt", "r+") as fpet:

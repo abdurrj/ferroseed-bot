@@ -1,6 +1,7 @@
 from bot import *
 from discord.utils import get, find
 import datetime
+import random
 
 class test_module(commands.Cog):
     def __init__(self, client):
@@ -97,6 +98,23 @@ class test_module(commands.Cog):
             e.set_footer(text=f'{self.client.user.name}',
                          icon_url=self.client.user.avatar_url)
             await ctx.send(f"{winner.mention}", embed=e)
+
+
+    @commands.command()
+    async def channeltester(self, ctx, channel_name:str):
+        guild = ctx.message.guild
+        raider_role = guild.get_role(746168865737932831)
+        # bot_user = guild.get_role(741695006221271130)
+        overwrites = {
+        guild.default_role: discord.PermissionOverwrite(read_messages=False),
+        raider_role: discord.PermissionOverwrite(read_messages=True),
+        self.client.user: discord.PermissionOverwrite(read_messages=True)
+        }
+        raid_category = self.client.get_channel(734492166365380608)
+        await guild.create_text_channel(channel_name, category=raid_category, overwrites=overwrites)
+
+
+
 
 """     @commands.command()
     async def reactrole(self, ctx, reaction, role):

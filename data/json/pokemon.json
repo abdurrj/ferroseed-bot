@@ -4034,7 +4034,44 @@
             "shield": []
         },
         "forms": [
-            "Mega"
+            "Mega",
+            "Galarian"
+        ]
+    },
+    {
+        "dexId": 80,
+        "name": "Galarian Slowbro",
+        "baseStats": {
+            "hp": 95,
+            "atk": 100,
+            "def": 95,
+            "spA": 100,
+            "spD": 70,
+            "spe": 30,
+            "tot": 490
+        },
+        "catchRate": 75,
+        "type1": "Poison",
+        "type2": "Psychic",
+        "weight": 70.5,
+        "height": 1.6,
+        "evolutions": [],
+        "generation": "SwSh",
+        "genderRatio": "50% ♂ : 50% ♀",
+        "eggGroup1": "Monster",
+        "eggGroup2": "Water 1",
+        "abilities": {
+            "ability1": "Quick Draw",
+            "ability2": null,
+            "abilityH": null
+        },
+        "dens": {
+            "sword": [],
+            "shield": []
+        },
+        "forms": [
+            "Mega",
+            "Galarian"
         ]
     },
     {
@@ -7150,6 +7187,39 @@
         ]
     },
     {
+        "dexId": 144,
+        "name": "Galarian Articuno",
+        "baseStats": {
+            "hp": 90,
+            "atk": 85,
+            "def": 85,
+            "spA": 125,
+            "spD": 100,
+            "spe": 95,
+            "tot": 580
+        },
+        "catchRate": 3,
+        "type1": "Psychic",
+        "type2": "Flying",
+        "weight": 50.9,
+        "height": 1.7,
+        "evolutions": [],
+        "generation": "SwSh",
+        "genderRatio": "100% ⚲",
+        "eggGroup1": "Undiscovered",
+        "eggGroup2": null,
+        "abilities": {
+            "ability1": "Competetive",
+            "ability2": null,
+            "abilityH": null
+        },
+        "dens": {
+            "sword": [],
+            "shield": []
+        },
+        "forms": []
+    },
+    {
         "dexId": 145,
         "name": "Zapdos",
         "baseStats": {
@@ -7185,6 +7255,39 @@
         ]
     },
     {
+        "dexId": 145,
+        "name": "Galarian Zapdos",
+        "baseStats": {
+            "hp": 90,
+            "atk": 125,
+            "def": 90,
+            "spA": 85,
+            "spD": 90,
+            "spe": 100,
+            "tot": 580
+        },
+        "catchRate": 3,
+        "type1": "Fighting",
+        "type2": "Flying",
+        "weight": 58.2,
+        "height": 1.6,
+        "evolutions": [],
+        "generation": "SwSh",
+        "genderRatio": "100% ⚲",
+        "eggGroup1": "Undiscovered",
+        "eggGroup2": null,
+        "abilities": {
+            "ability1": "Defiant",
+            "ability2": null,
+            "abilityH": null
+        },
+        "dens": {
+            "sword": [],
+            "shield": []
+        },
+        "forms": []
+    },
+    {
         "dexId": 146,
         "name": "Moltres",
         "baseStats": {
@@ -7218,6 +7321,39 @@
         "forms": [
             "Galarian"
         ]
+    },
+    {
+        "dexId": 146,
+        "name": "Galarian Moltres",
+        "baseStats": {
+            "hp": 90,
+            "atk": 85,
+            "def": 90,
+            "spA": 100,
+            "spD": 125,
+            "spe": 90,
+            "tot": 580
+        },
+        "catchRate": 3,
+        "type1": "Dark",
+        "type2": "Flying",
+        "weight": 66,
+        "height": 2,
+        "evolutions": [],
+        "generation": "RedBlue",
+        "genderRatio": "100% ⚲",
+        "eggGroup1": "Undiscovered",
+        "eggGroup2": null,
+        "abilities": {
+            "ability1": "Berserk",
+            "ability2": null,
+            "abilityH": null
+        },
+        "dens": {
+            "sword": [],
+            "shield": []
+        },
+        "forms": []
     },
     {
         "dexId": 147,
@@ -9339,6 +9475,39 @@
             "ability1": "Oblivious",
             "ability2": "Own Tempo",
             "abilityH": "Regenerator"
+        },
+        "dens": {
+            "sword": [],
+            "shield": []
+        },
+        "forms": []
+    },
+    {
+        "dexId": 199,
+        "name": "Galarian Slowking",
+        "baseStats": {
+            "hp": 95,
+            "atk": 65,
+            "def": 80,
+            "spA": 110,
+            "spD": 110,
+            "spe": 30,
+            "tot": 490
+        },
+        "catchRate": 70,
+        "type1": "Poison",
+        "type2": "Psychic",
+        "weight": 79.5,
+        "height": 1.8,
+        "evolutions": [],
+        "generation": "SwSh",
+        "genderRatio": "50% ♂ : 50% ♀",
+        "eggGroup1": "Monster",
+        "eggGroup2": "Water 1",
+        "abilities": {
+            "ability1": "Curious Medicine",
+            "ability2": null,
+            "abilityH": null
         },
         "dens": {
             "sword": [],
