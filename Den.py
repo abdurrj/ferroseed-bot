@@ -30,8 +30,6 @@ class Den(commands.Cog):
 
     @commands.command()
     async def den(self, ctx, pkmn, *form_input):
-        id = ctx.message.author.id
-        p = Person(id, ctx.message.channel, ctx.message.author)
         user = ctx.message.author.name
         with open(r"data/json/pokemon.json", "r") as read_file:
             data = json.load(read_file)

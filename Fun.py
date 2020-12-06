@@ -49,7 +49,7 @@ class Fun(commands.Cog):
         colour = discord.Colour.red())
         embed.add_field(name='<:sherbSad:732994987683217518> escaped', value="<@"+str(id)+"> did not catch the pokemon.", inline=True)
         a = await ctx.send(embed=embed)
-        await a.add_reaction("<:ferroSad:735707312420945940>")
+        await discord.Message.add_reaction(a, "<:ferroSad:735707312420945940>")
 
 
     @commands.command()

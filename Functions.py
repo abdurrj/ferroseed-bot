@@ -3,6 +3,7 @@ import random
 import emoji
 import re
 import asyncio
+import sys
 
 class Functions(commands.Cog):
     def __init__(self, client):
@@ -21,8 +22,8 @@ class Functions(commands.Cog):
         else:
             b = await ctx.send("Sorry, you can't do that")
             await asyncio.sleep(2)
-            await a.delete()
-            await b.delete()
+            await discord.Message.delete(a)
+            await discord.Message.delete(b)
 
 
     @commands.command()
@@ -48,7 +49,7 @@ class Functions(commands.Cog):
                             ""+ a)
         for i in all_emojis:
             try:
-                await poll.add_reaction(i)
+                await discord.Message.add_reaction(poll, i)
             except:
                 print("Emoji " + i + " not found")
 

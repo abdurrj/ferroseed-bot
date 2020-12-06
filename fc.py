@@ -9,7 +9,6 @@ class fc(commands.Cog):
 
     @commands.command()
     async def fc_old(self, ctx, *args):
-        # p = Person(id, ctx.message.channel, ctx.message.author)
         filename = r"data/csv/friendcodes.csv"
         df = pd.read_csv(filename)
         if args:
