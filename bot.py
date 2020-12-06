@@ -9,7 +9,8 @@ from random import randint, randrange
 from io import StringIO, BytesIO
 import pandas as pd
 import asyncio
-
+import time
+import random
 
 TOKEN = open("token.txt","r").readline()
 
@@ -52,6 +53,48 @@ async def embed(ctx, name, *, text):
 ########################################################
 # Work in progress:
 
+@client.command()
+async def divide(ctx, DRAFT_COUNT:int=10):
+    ladder_agree = []
+    ladder_team_a = []
+    ladder_team_b = []
+
+    ladder = await ctx.send("Would you like to join the team distribution?")
+    await ladder.add_reaction("⭕")
+
+    guide_text = await ctx.send("count : " + str(DRAFT_COUNT) + " sec")
+    while DRAFT_COUNT>=1:
+        DRAFT_COUNT -= 1
+        await guide_text.edit(content=f"count : {DRAFT_COUNT} sec")
+        await asyncio.sleep(1)
+    
+    await guide_text.edit(content="done")
+    ladder = await ctx.channel.fetch_message(ladder.id)
+    ladder_agree = [u.mention for u in await ladder.reactions[0].users().flatten() if u != client.user]
+
+    if len(ladder_agree)>1:
+        while len(ladder_agree) > 1:
+            if len(ladder_agree)>0:
+                temp1 = random.choice(ladder_agree)
+                ladder_team_a.append(temp1)
+                ladder_agree.remove(temp1)
+
+            if len(ladder_agree)>0:
+                temp2 = random.choice(ladder_agree)
+                ladder_team_b.append(temp2)
+                ladder_agree.remove(temp2)
+
+        text = ""
+        for i in range(0, len(ladder_team_a)):
+            text = text + ladder_team_a[i] + ", " 
+        await ctx.send("\n\n Team A : " + text)
+
+        text2 = ""
+        for i in range(0, len(ladder_team_b)):
+            text2 = text2 + ladder_team_b[i] + ", "
+        await ctx.send("\n\n Team B : " + text2)
+    else:
+        await ctx.send("Not enough entrants")
 
 
 # Add custom commands over this
