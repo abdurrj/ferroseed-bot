@@ -25,7 +25,8 @@ class test_module(commands.Cog):
     async def emojiprint(self,ctx, *, message):
         print(message)
 
-    @commands.command()
+
+"""     @commands.command()
     async def user_react(self, ctx):
         message = ctx.message
         embed = discord.Embed(title='General Information', color=16769251)
@@ -97,7 +98,7 @@ class test_module(commands.Cog):
             e.timestamp = datetime.datetime.utcnow()
             e.set_footer(text=f'{self.client.user.name}',
                          icon_url=self.client.user.avatar_url)
-            await ctx.send(f"{winner.mention}", embed=e)
+            await ctx.send(f"{winner.mention}", embed=e) """
 
 """     @commands.command()
     async def reactrole(self, ctx, reaction, role):
@@ -141,7 +142,6 @@ class test_module(commands.Cog):
             else:
                 print("operatio rolereact cancelled, no role found")
         # print(message.content)  """
-
 
 """     @commands.command()
     async def reactrolechange(self, ctx, oldkey, newkey):
