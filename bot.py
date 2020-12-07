@@ -73,26 +73,32 @@ async def divide(ctx, DRAFT_COUNT:int=10):
     ladder_agree = [u.mention for u in await ladder.reactions[0].users().flatten() if u != client.user]
 
     if len(ladder_agree)>1:
-        while len(ladder_agree) > 1:
-            if len(ladder_agree)>0:
-                temp1 = random.choice(ladder_agree)
-                ladder_team_a.append(temp1)
-                ladder_agree.remove(temp1)
+        a = int(len(ladder_agree)/2)
+        if (len(ladder_agree) %2)!=0:
+            print('list is uneven')
+            p = random.randint(0,1)
+            if p==1:
+                a +=1
+        
+        ladder_team_a = random.sample(ladder_agree, a)
+        ladder_team_b = ladder_agree
+        for i in ladder_team_a:
+            ladder_team_b.remove(i)
 
-            if len(ladder_agree)>0:
-                temp2 = random.choice(ladder_agree)
-                ladder_team_b.append(temp2)
-                ladder_agree.remove(temp2)
+        texta = ", ".join(i for i in ladder_team_a)
+        textb = ", ".join(i for i in ladder_team_b)
+        await ctx.send("Team A: " + texta)
+        await ctx.send("Team B: " + textb)
 
-        text = ""
-        for i in range(0, len(ladder_team_a)):
-            text = text + ladder_team_a[i] + ", " 
-        await ctx.send("\n\n Team A : " + text)
+        # text = ""
+        # for i in range(0, len(ladder_team_a)):
+        #     text = text + ladder_team_a[i] + ", " 
+        # await ctx.send("\n\n Team A : " + text)
 
-        text2 = ""
-        for i in range(0, len(ladder_team_b)):
-            text2 = text2 + ladder_team_b[i] + ", "
-        await ctx.send("\n\n Team B : " + text2)
+        # text2 = ""
+        # for i in range(0, len(ladder_team_b)):
+        #     text2 = text2 + ladder_team_b[i] + ", "
+        # await ctx.send("\n\n Team B : " + text2)
     else:
         await ctx.send("Not enough entrants")
 
