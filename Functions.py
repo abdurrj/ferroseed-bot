@@ -183,13 +183,13 @@ class Functions(commands.Cog):
         await self.client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=w))
 
 
-"""     # Remove this if it has no more use
+    # Remove this if it has no more use
     @commands.command()
     async def oldroll(self, ctx, wnr_amount, msg_id):
         command_user = ctx.message.author
         print(command_user)
         guild = ctx.message.guild
-        channel_id = 738391260662071359
+        channel_id = 766277566934810634
         channel = discord.Guild.get_channel(guild, channel_id=channel_id)
         print(channel)
         message_id = msg_id
@@ -216,7 +216,7 @@ class Functions(commands.Cog):
                                 + str(winner_names)+"\nWinner ID:\n```"+str(winner_id) + "```")
         else:
             await ctx.send("What, you want **" + wnr_amount + "** winner(s)? Maybe try a (positive) number?")
-        await message.unpin() """
+        await message.unpin()
 
 
 def setup(client):
