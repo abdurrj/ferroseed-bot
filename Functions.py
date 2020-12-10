@@ -11,19 +11,10 @@ class Functions(commands.Cog):
 
 
     @commands.command()
-    async def clearup(self, ctx, amount):
-        amount = int(amount)
-        user = ctx.message.author.id
-        a = ctx.message
-        chan = ctx.channel
-        if user in admin_users_id:
-            await discord.Message.delete(a)
-            await chan.purge(limit=amount)
-        else:
-            b = await ctx.send("Sorry, you can't do that")
-            await asyncio.sleep(2)
-            await discord.Message.delete(a)
-            await discord.Message.delete(b)
+    @commands.has_permissions(administrator=True)
+    async def clearup(self, ctx, amount:int=0):
+        await ctx.message.delete()
+        await ctx.message.channel.purge(limit=amount)
 
 
     @commands.command()
@@ -49,7 +40,7 @@ class Functions(commands.Cog):
                             ""+ a)
         for i in all_emojis:
             try:
-                await discord.Message.add_reaction(poll, i)
+                await poll.add_reaction(i)
             except:
                 print("Emoji " + i + " not found")
 
@@ -67,7 +58,7 @@ class Functions(commands.Cog):
             message_content = ' '.join(message_content)
         else:
             message_content = ""
-        await discord.Message.delete(ctx.message)
+        await ctx.message.delete()
         await ctx.send("Sent by <@"+str(poster)+">\n"+str(message_content), files=files)
 
 
