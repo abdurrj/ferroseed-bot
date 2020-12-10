@@ -1,7 +1,7 @@
 import discord
 intents = discord.Intents.all()
 from discord.ext import tasks, commands
-from discord.ext.commands import Cog
+from discord.ext.commands import Cog, MissingPermissions, MissingAnyRole
 from discord.ext.commands.cooldowns import BucketType
 from discord.utils import find, get
 from discord import Member
@@ -73,32 +73,29 @@ async def divide(ctx, DRAFT_COUNT:int=10):
     ladder_agree = [u.mention for u in await ladder.reactions[0].users().flatten() if u != client.user]
 
     if len(ladder_agree)>1:
-        a = int(len(ladder_agree)/2)
+        a = int(len(ladder_agree)/2) 
+        # Forcing a to be int and not float. int will round down if list is uneven. int(5.4) = 5, int(5.8) = 5
+        
+        # If list is uneven (odd number players), it's random what team gets to be one extra player
         if (len(ladder_agree) %2)!=0:
             print('list is uneven')
             p = random.randint(0,1)
             if p==1:
                 a +=1
         
+        # team_a list = select a amount of players from ladder_agree list
         ladder_team_a = random.sample(ladder_agree, a)
+
+        # To put the rest in team_b
         ladder_team_b = ladder_agree
         for i in ladder_team_a:
             ladder_team_b.remove(i)
 
+        # To generate the text strings and send the messages
         texta = ", ".join(i for i in ladder_team_a)
         textb = ", ".join(i for i in ladder_team_b)
         await ctx.send("Team A: " + texta)
         await ctx.send("Team B: " + textb)
-
-        # text = ""
-        # for i in range(0, len(ladder_team_a)):
-        #     text = text + ladder_team_a[i] + ", " 
-        # await ctx.send("\n\n Team A : " + text)
-
-        # text2 = ""
-        # for i in range(0, len(ladder_team_b)):
-        #     text2 = text2 + ladder_team_b[i] + ", "
-        # await ctx.send("\n\n Team B : " + text2)
     else:
         await ctx.send("Not enough entrants")
 
