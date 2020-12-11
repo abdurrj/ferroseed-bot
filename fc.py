@@ -68,7 +68,6 @@ class fc(commands.Cog):
 
             def checker(reaction, user):
                 return user == ctx.author and str(reaction.emoji) in emoji_list
-                # This makes sure nobody except the command sender can interact with the "menu"
 
             while True:
                 try:

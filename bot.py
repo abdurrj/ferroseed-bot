@@ -41,6 +41,7 @@ async def on_message(message):
 
 # To embed a message, this will also delete user command message
 @client.command()
+@commands.cooldown(1, 200, BucketType.user)
 async def embed(ctx, name, *, text):
     embed = discord.Embed(
     colour = discord.Colour.green())
@@ -48,56 +49,21 @@ async def embed(ctx, name, *, text):
     await ctx.send(embed=embed)
     await discord.Message.delete(ctx.message)
 
+@embed.error
+async def embed_cooldown(ctx, error):
+    if isinstance(error, commands.CommandOnCooldown):
+        msg = "{:0f}".format(error.retry_after)
+        number = int(float(msg))
+        minutes, seconds = divmod(number, 60)
+        timeformat = "You can't use the command this often. Time to wait: {:02d}:{:02d}".format(minutes, seconds)
+        print(timeformat)
+    
 
 ########################################################
 ########################################################
 # Work in progress:
 
-@client.command()
-async def divide(ctx, DRAFT_COUNT:int=10):
-    ladder_agree = []
-    ladder_team_a = []
-    ladder_team_b = []
 
-    ladder = await ctx.send("Would you like to join the team distribution?")
-    await ladder.add_reaction("⭕")
-
-    guide_text = await ctx.send("count : " + str(DRAFT_COUNT) + " sec")
-    while DRAFT_COUNT>=1:
-        DRAFT_COUNT -= 1
-        await guide_text.edit(content=f"count : {DRAFT_COUNT} sec")
-        await asyncio.sleep(1)
-    
-    await guide_text.edit(content="done")
-    ladder = await ctx.channel.fetch_message(ladder.id)
-    ladder_agree = [u.mention for u in await ladder.reactions[0].users().flatten() if u != client.user]
-
-    if len(ladder_agree)>1:
-        a = int(len(ladder_agree)/2) 
-        # Forcing a to be int and not float. int will round down if list is uneven. int(5.4) = 5, int(5.8) = 5
-        
-        # If list is uneven (odd number players), it's random what team gets to be one extra player
-        if (len(ladder_agree) %2)!=0:
-            print('list is uneven')
-            p = random.randint(0,1)
-            if p==1:
-                a +=1
-        
-        # team_a list = select a amount of players from ladder_agree list
-        ladder_team_a = random.sample(ladder_agree, a)
-
-        # To put the rest in team_b
-        ladder_team_b = ladder_agree
-        for i in ladder_team_a:
-            ladder_team_b.remove(i)
-
-        # To generate the text strings and send the messages
-        texta = ", ".join(i for i in ladder_team_a)
-        textb = ", ".join(i for i in ladder_team_b)
-        await ctx.send("Team A: " + texta)
-        await ctx.send("Team B: " + textb)
-    else:
-        await ctx.send("Not enough entrants")
 
 
 # Add custom commands over this

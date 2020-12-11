@@ -115,7 +115,6 @@ class Dexter(commands.Cog):
                     poke_name = pkmn_info['name']
                     possible_names.append(poke_name)
                     poke_dict_forms = pkmn_info["forms"]
-                    # print(poke_dict_forms)
         
         if len(possible_names) == 0:
             print("No match")
@@ -123,11 +122,9 @@ class Dexter(commands.Cog):
             pokemon = possible_names[0]
         
         
-        # print(poke_dict_forms)
         if len(poke_dict_forms) == 0:
             form = ""
         else:
-            # Form check
             available_forms = []
             if form_input:
                 form_input = list(form_input)
@@ -173,8 +170,6 @@ class Dexter(commands.Cog):
         else:
             print("no form")
             pokemon_lookup = pokemon
-        
-        # print(pokemon_lookup)
 
         for i in range(0, len(data)):
             pkmn_info = data[i]
