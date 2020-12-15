@@ -31,3 +31,5 @@ __pycache__/Hosting.cpython-38.pyc
 *.pyc
 data/txt/ferrohurt.txt
 *.pyc
+*.pyc
+__pycache__/countdown.cpython-38.pyc

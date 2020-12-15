@@ -26,6 +26,12 @@ class test_module(commands.Cog):
         print(message)
 
 
+
+    @commands.command()
+    async def ping(self, ctx):
+        await ctx.send(f"Pong {round(self.client.latency * 1000)}ms")
+
+
 """     @commands.command()
     async def user_react(self, ctx):
         message = ctx.message
