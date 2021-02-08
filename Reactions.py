@@ -141,6 +141,33 @@ class Reactions(Cog):
 
 
 
+    @Cog.listener()
+    async def on_raw_reaction_remove(self, payload):
+        message_id = payload.message_id
+        if message_id == 756051702200664115:
+            guild_id = payload.guild_id
+            guild = self.client.get_guild(guild_id)
+            
+            role = None
+            if payload.emoji.name == '😈':
+                role = discord.utils.get(guild.roles, name='Uniwinkle')
+            elif payload.emoji.name == '🟠':
+                role = discord.utils.get(guild.roles, name='Orange')
+            elif payload.emoji.name == '🟡':
+                role = discord.utils.get(guild.roles, name='Yellow')
+            
+            if role is not None:
+                member = guild.get_member(payload.user_id)
+                print(member.name)
+                if member is not None:
+                    await member.remove_roles(role)
+                    print("done")
+                else:
+                    print("Member not found") 
+            else:
+                print("Role not found")
+"""
+
 #     # remove react to remove role
     @Cog.listener()
     async def on_raw_reaction_remove(self, payload):
@@ -217,6 +244,8 @@ class Reactions(Cog):
                     print("member not found")
             else:
                 print("role not found")
+
+
         
 
         # Remove react to remove pin start
@@ -255,7 +284,7 @@ class Reactions(Cog):
 #     Reaction events end
 #     #################
 #     '''
-
+"""
 
 def setup(client):
     client.add_cog(Reactions(client))
